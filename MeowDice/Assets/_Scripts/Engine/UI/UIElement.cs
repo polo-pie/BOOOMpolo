@@ -1,0 +1,199 @@
+using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using Object = System.Object;
+
+namespace Engine.UI
+{
+    // public abstract class UIElementData
+    // {
+    //     public bool visible;
+    // }
+    //
+    public interface IUIElement
+    {
+        public GameObject GameObject { get; }
+        public string Name { get; }
+        public UIElement Parent { get; }
+        public Dictionary<string, UIElement> ChildUIElements { get; }
+        public bool Visible { get; }
+
+        public void InitData(Dictionary<string, object> data);
+        
+        
+        public void Destroy(bool destroyGo = false);
+    
+        public void SetVisible(bool value);
+    }
+    
+    public abstract class UIElement: IUIElement
+    {
+        private bool _destroyed = false;
+        private int _index = 0;
+        private string _bindValueKey = "";
+        
+        private GameObject _go;
+        public GameObject GameObject => _go;
+        
+        public string Name => _go.name;
+        
+        private UIElement _parent;
+        public UIElement Parent => _parent;
+
+        private Dictionary<string, UIElement> _childElements;
+        public Dictionary<string, UIElement> ChildUIElements => _childElements;
+
+        private bool _visible;
+        public bool Visible => _visible;
+
+        protected Dictionary<string, object> inputData;
+        protected Dictionary<string, object> outputData;
+
+        public void SetVisible(bool value)
+        {
+            if (_go.activeSelf == value)
+                return;
+            _go.SetActive(value);
+            _visible = value;
+            if(value)
+                OnVisible();
+            else
+                OnHidden();
+        }
+
+        #region Life Circle
+        
+        public void Destroy(bool destroyGo=false)
+        {
+            if(_destroyed)
+                return;
+            
+            foreach (var childElement in _childElements.Values)
+            {
+                childElement.Destroy();
+            }
+            
+            OnDestroy();
+            _childElements.Clear();
+            
+            if(destroyGo && _go != null)
+                UnityEngine.Object.Destroy(_go);
+
+            _destroyed = true;
+        }
+
+        public void InitData(Dictionary<string, object> data)
+        {
+            inputData = data;
+            RefreshData(data);
+            OnRefresh();
+
+            foreach (var childElement in _childElements.Values)
+            {
+                childElement.InitData(outputData);
+            }
+            
+            OnInit();
+        }
+
+        protected virtual void OnCreate(){}
+        
+        protected virtual void OnInit(){}
+
+        protected virtual void OnVisible(){}
+        
+        protected virtual void OnHidden(){}
+
+        protected virtual void OnDestroy(){}
+
+        protected virtual void OnRefreshData(){}
+        
+        /// <summary>
+        /// Code generate by export script
+        /// </summary>
+        protected virtual void OnRefreshDataAuto(){}
+        
+        protected virtual void OnRefresh(){}
+        
+        #endregion
+
+        #region Element Operate
+
+        public T AddUIElement<T>(GameObject go) where T: UIElement
+        {
+            var element = AddUIElement(typeof(T), go);
+            if (element == null)
+                return null;
+            return element as T;
+        }
+
+        public UIElement AddUIElement(Type elementType, GameObject go)
+        {
+            UIElement element = Activator.CreateInstance(elementType) as UIElement;
+            if (element == null)
+            {
+                Debug.LogError($"[Engine][UIElement][AddUIElement] create element fail, type {elementType}");
+                return null;
+            }
+            
+            if (ChildUIElements.ContainsKey(go.name))
+            {
+                Debug.LogWarning($"[Engine][UIElement][AddUIElement] element key {go.name} already exist, check is any chile game object with same name");
+                go.name = go.name + $"_{_index++}";
+            }
+            ChildUIElements[go.name] = element;
+            element._go = go;
+            element._parent = this;
+            
+            DoAddElement(go);
+            
+            return element;
+        }
+
+        /// <summary>
+        /// Override by inherit class, to bind property or variable
+        /// </summary>
+        /// <param name="go"></param>
+        protected virtual void DoAddElement(GameObject go){}
+
+        public void RemoveElement(string uiElementName)
+        {
+            if (!ChildUIElements.TryGetValue(uiElementName, out var element))
+            {
+                Debug.LogWarning($"[Engine][UIElement][AddUIElement] {uiElementName} not exist in child, this element {_go.name}");
+                return;
+            }
+            
+            element.Destroy();
+            ChildUIElements.Remove(uiElementName);
+        }
+
+        public void RefreshUIElement(Dictionary<string, object> data)
+        {
+            if (data == null)
+            {
+                Debug.LogError($"[Engine][UIElement][RefreshUIElement] data is null, element {GameObject.name}");
+                return;
+            }
+            
+            RefreshData(data);
+
+            if (Visible)
+            {
+                OnRefresh();
+            }
+        }
+
+
+        private void RefreshData(Dictionary<string, object> data)
+        {
+            inputData = data;
+            OnRefreshDataAuto();
+            OnRefreshData();
+        }
+
+        #endregion
+        
+    }
+}
