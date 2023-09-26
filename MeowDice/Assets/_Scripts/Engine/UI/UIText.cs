@@ -9,11 +9,11 @@ namespace Engine.UI
 
         protected override void OnCreate()
         {
-            _text = GameObject.GetComponent<Text>();
+            _text = Go.GetComponent<Text>();
 
             if (_text == null)
             {
-                Debug.LogError($"[Engine][UIText][OnCreate] component Text not found, element {GameObject.name}");
+                Debug.LogError($"[Engine][UIText][OnCreate] component Text not found, element {Go.name}");
             }
         }
 
@@ -27,5 +27,6 @@ namespace Engine.UI
             
             _text.text = value.ToString();
         }
+        
     }
 }

@@ -1,7 +1,10 @@
 namespace Engine.UI
 {
-    public class UIWidget
+    public class UIWidget: UIElement
     {
-        
+        public override void Close()
+        {
+            Destroy(true);
+        }
     }
 }

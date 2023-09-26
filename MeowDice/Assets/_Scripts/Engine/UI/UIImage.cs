@@ -10,10 +10,10 @@ namespace Engine.UI
 
         protected override void OnCreate()
         {
-            _image = GameObject.GetComponent<Image>();
+            _image = Go.GetComponent<Image>();
             if (_image == null)
             {
-                Debug.LogError($"[Engine][UIImage][OnCreate] component Image not found, element {GameObject.name}");
+                Debug.LogError($"[Engine][UIImage][OnCreate] component Image not found, element {Go.name}");
                 return;
             }
 
@@ -45,5 +45,6 @@ namespace Engine.UI
 
             
         }
+        
     }
 }
