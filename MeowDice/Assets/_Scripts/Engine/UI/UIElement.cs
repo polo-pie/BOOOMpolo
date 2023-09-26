@@ -13,18 +13,17 @@ namespace Engine.UI
     //
     public interface IUIElement
     {
-        public GameObject GameObject { get; }
+        public GameObject Go { get; }
         public string Name { get; }
         public UIElement Parent { get; }
         public Dictionary<string, UIElement> ChildUIElements { get; }
         public bool Visible { get; }
 
-        public void InitData(Dictionary<string, object> data);
+        void InitData(Dictionary<string, object> data);
         
-        
-        public void Destroy(bool destroyGo = false);
-    
-        public void SetVisible(bool value);
+        void SetVisible(bool value);
+
+        void Close();
     }
     
     public abstract class UIElement: IUIElement
@@ -34,8 +33,10 @@ namespace Engine.UI
         private string _bindValueKey = "";
         
         private GameObject _go;
-        public GameObject GameObject => _go;
+        public GameObject Go => _go;
         
+        public RectTransform RectTransform => Go.transform as RectTransform;
+
         public string Name => _go.name;
         
         private UIElement _parent;
@@ -63,8 +64,13 @@ namespace Engine.UI
         }
 
         #region Life Circle
-        
-        public void Destroy(bool destroyGo=false)
+
+        public virtual void Close()
+        {
+            Destroy();
+        }
+
+        protected void Destroy(bool destroyGo=false)
         {
             if(_destroyed)
                 return;
@@ -173,7 +179,7 @@ namespace Engine.UI
         {
             if (data == null)
             {
-                Debug.LogError($"[Engine][UIElement][RefreshUIElement] data is null, element {GameObject.name}");
+                Debug.LogError($"[Engine][UIElement][RefreshUIElement] data is null, element {Go.name}");
                 return;
             }
             
