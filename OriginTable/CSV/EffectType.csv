@@ -1,0 +1,5 @@
+TypeID,Const_string,##Notes
+效果类型ID,常量名,备注
+int,string,
+1,San_Change,san值改变（para1）
+2,Alert_Change,警戒度改变（para1）
