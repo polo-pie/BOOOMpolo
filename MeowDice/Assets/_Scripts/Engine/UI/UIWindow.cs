@@ -16,6 +16,9 @@ namespace Engine.UI
         
         public int WindowLayer { private set; get; }
 
+        private bool _closed = false;
+        private bool _create = false;
+
         public int Depth
         {
             get
@@ -36,7 +39,30 @@ namespace Engine.UI
         
         public override void Close()
         {
+            if (_closed)
+                return;
+            
+            _closed = true;
+            
             Destroy(true);
+        }
+
+        internal void InternalCreate()
+        {
+            if (!_create)
+            {
+                _create = true;
+                _go = GameObject.Instantiate(Resources.Load<GameObject>(PrefabPath), UIModule.Instance.UIRoot);
+                if (_go != null)
+                {
+                    OnCreate();
+                }
+                else
+                {
+                    Debug.LogError($"[UI][Window][InternalCreate] Create Window {GetType()} fail gameObject is null, path: {PrefabPath}");
+                    Close();
+                }
+            }
         }
     }
 }

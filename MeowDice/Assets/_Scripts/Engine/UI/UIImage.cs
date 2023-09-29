@@ -27,10 +27,10 @@ namespace Engine.UI
                 Debug.LogError("[Engine][UIImage][OnRefreshData] key path not found in inputData");
                 return;
             }
-
+            
             if (value is string path)
             {
-                if (_lastImagePath != path)
+                if (_lastImagePath != path && !string.IsNullOrEmpty(path))
                 {
                     var texture2D = Resources.Load<Texture2D>(path);
                     Sprite sprite = Sprite.Create(texture2D, Rect.MinMaxRect(0, 0, texture2D.width, texture2D.height), Vector2.one / 2);

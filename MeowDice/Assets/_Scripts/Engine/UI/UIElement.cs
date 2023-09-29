@@ -32,7 +32,7 @@ namespace Engine.UI
         private int _index = 0;
         private string _bindValueKey = "";
         
-        private GameObject _go;
+        protected GameObject _go;
         public GameObject Go => _go;
         
         public RectTransform RectTransform => Go.transform as RectTransform;
@@ -42,7 +42,7 @@ namespace Engine.UI
         private UIElement _parent;
         public UIElement Parent => _parent;
 
-        private Dictionary<string, UIElement> _childElements;
+        private Dictionary<string, UIElement> _childElements = new Dictionary<string, UIElement>();
         public Dictionary<string, UIElement> ChildUIElements => _childElements;
 
         private bool _visible;
@@ -88,17 +88,18 @@ namespace Engine.UI
 
             _destroyed = true;
         }
-
+    
         public void InitData(Dictionary<string, object> data)
         {
             inputData = data;
             RefreshData(data);
-            OnRefresh();
+            // OnRefresh();
 
-            foreach (var childElement in _childElements.Values)
-            {
-                childElement.InitData(outputData);
-            }
+            // foreach (var childElement in _childElements.Values)
+            // {
+            //     childElement.InitData(outputData);
+            // }
+            BindProperty();
             
             OnInit();
         }
@@ -122,6 +123,8 @@ namespace Engine.UI
         
         protected virtual void OnRefresh(){}
         
+        protected virtual void BindProperty() {}
+        
         #endregion
 
         #region Element Operate
@@ -142,6 +145,12 @@ namespace Engine.UI
                 Debug.LogError($"[Engine][UIElement][AddUIElement] create element fail, type {elementType}");
                 return null;
             }
+
+            if (go == null)
+            {
+                Debug.LogError($"[Engine][UIElement][AddUIElement] create element fail, gameObject is null, type {elementType}");
+                return null;
+            }
             
             if (ChildUIElements.ContainsKey(go.name))
             {
@@ -152,7 +161,9 @@ namespace Engine.UI
             element._go = go;
             element._parent = this;
             
-            DoAddElement(go);
+            // DoAddElement(go);
+            
+            element.OnCreate();
             
             return element;
         }
