@@ -68,9 +68,7 @@ namespace _Scripts.Gameplay.UI
             _sanSlider.value = targetSanValue;
             _alterSlider.value = targetAlterValue;
 
-            var curtainWindow = UIModule.Instance.GetWindow<CurtainWindow>();
-            curtainWindow.SetVisible(true);
-            curtainWindow.PlayEnterNextRound();
+            MeowDiceCardGame.Instance.RoundEnd();
         }
     }
 }
