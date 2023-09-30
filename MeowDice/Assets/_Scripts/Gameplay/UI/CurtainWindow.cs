@@ -6,7 +6,7 @@ using MeowDice.GamePlay.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Scripts.Gameplay.UI
+namespace MeowDice.GamePlay.UI
 {
     public class CurtainWindow: UIWindow
     {
@@ -20,7 +20,6 @@ namespace _Scripts.Gameplay.UI
         {
             _curtainText = Go.transform.Find("Curtain/Text").GetComponent<Text>();
             _curtain = Go.transform.Find("Curtain").GetComponent<RectTransform>();
-            GameEvent.AddEventListener(EventKey.OnEnterNextRound, OnEnterNextRound);
             GameEvent.AddEventListener<bool>(EventKey.OnGameEnd, OnGameEnd);
         }
 
@@ -90,7 +89,7 @@ namespace _Scripts.Gameplay.UI
             window.EnterCardUseStage();
         }
 
-        public void OnGameEnd(bool isWin)
+        private void OnGameEnd(bool isWin)
         {
             SetVisible(true);
             _curtain.localPosition = Vector3.zero;

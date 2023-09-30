@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using Engine.Runtime;
 using Engine.SettingModule;
 using MeowDice.GamePlay.Settings;
 using Unity.Mathematics;
+using UnityEngine.Rendering;
 using Random = UnityEngine.Random;
 
 namespace MeowDice.GamePlay
@@ -19,6 +21,7 @@ namespace MeowDice.GamePlay
         public int RandomSelectCardIndex => _lastRandomSelectCardIndex;
 
         private MeowDiceCardGame _game;
+        private uint _cardUid;
 
         public MeowDiceCardManager(MeowDiceCardGame game)
         {
@@ -37,7 +40,7 @@ namespace MeowDice.GamePlay
             {
                 for (int i = droppedCards.Count - 1; i > 0; i--)
                 {
-                    var index = Random.Range(0, i);
+                    var index = Random.Range(0, i + 1);
                     cards.Enqueue(droppedCards[index]);
                     droppedCards[index] = droppedCards[i];
                 }
@@ -55,14 +58,14 @@ namespace MeowDice.GamePlay
         {
             var table = TableModule.Get("InitializeDeck");
             droppedCards.Clear();
-            uint cardUid = 0;
+            _cardUid = 0;
 
             foreach (var cardId in table.csvData.Keys)
             {
                 var count = (int)table.GetData((uint)cardId, "Count");
                 for (int i = 0; i < count; i++)
                 {
-                    var card = new MeowDiceCard((uint)cardId, cardUid++);
+                    var card = new MeowDiceCard((uint)cardId, _cardUid++);
                     droppedCards.Add(card);
                 }
             }
@@ -101,6 +104,38 @@ namespace MeowDice.GamePlay
                 _game.Cat.AlterChange(alterChange);
                 _game.Cat.SanChange(sanChange);
                 GameEvent.Send(EventKey.OnStartAct, card.cardId, alterChange, sanChange);
+            }
+        }
+
+        public uint[] RandomCardsToSelect()
+        {
+            var table = TableModule.Get("Card");
+            var cardIds = table.csvData.Keys.ToArray();
+            for (int i = cardIds.Length - 1; i > 0; i--)
+            {
+                var pos = Random.Range(0, i + 1);
+                (cardIds[pos], cardIds[i]) = (cardIds[i], cardIds[pos]);
+            }
+            
+            var result = new uint[3];
+            for (int i = 0; i < 3; i++)
+                result[i] = (uint)cardIds[i];
+            return result;
+        }
+
+        public void AddCard(uint cardId)
+        {
+            var card = new MeowDiceCard((uint)cardId, _cardUid++);
+            var pos = Random.Range(0, cards.Count);
+            for (int i = 0; i < cards.Count; i++)
+            {
+                if (pos == i)
+                {
+                    cards.Enqueue(card);
+                }
+
+                var tmp = cards.Dequeue();
+                cards.Enqueue(tmp);
             }
         }
     }

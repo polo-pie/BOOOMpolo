@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection.Emit;
-using _Scripts.Gameplay.UI;
 using Engine.Runtime;
 using Engine.UI;
 using MeowDice.GamePlay.UI;
@@ -15,6 +14,7 @@ namespace MeowDice.GamePlay
         private MeowDiceCardGameWindow _window;
         private MeowDiceCatInfoWindow _catInfoWindow;
         private CurtainWindow _curtainWindow;
+        private SelectCardWindow _selectCardWindow;
         
         private void Awake()
         {
@@ -29,6 +29,9 @@ namespace MeowDice.GamePlay
             _catInfoWindow.SetVisible(false);
             _curtainWindow = UIModule.Instance.ShowUI<CurtainWindow>(new Dictionary<string, object>());
             _curtainWindow.SetVisible(false);
+            _selectCardWindow = UIModule.Instance.ShowUI<SelectCardWindow>(new Dictionary<string, object>());
+            _selectCardWindow.SetVisible(false);
+
         }
     }
 }
