@@ -1,4 +1,5 @@
 using Engine.Runtime;
+using MeowDice.GamePlay.Settings;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 
@@ -18,6 +19,8 @@ namespace MeowDice.GamePlay
         private RoundStage _roundStage;
         private MeowDiceCardManager _cardManager;
 
+        private bool _gameEnd;
+
         public void GameInit()
         {
             _cat = new Cat();
@@ -31,6 +34,22 @@ namespace MeowDice.GamePlay
         public void RoundEnd()
         {
             _player.OnRoundEnd();
+
+            if (_cat.altertValue >= SettingModule.Instance.GlobalConfig.AlterLimit.y)
+            {
+                _gameEnd = true;
+                GameEvent.Send(EventKey.OnGameEnd, false);
+            }
+            else if (_cat.sanValue <= SettingModule.Instance.GlobalConfig.SanLimit.x)
+            {
+                _gameEnd = true;
+                GameEvent.Send(EventKey.OnGameEnd, true);
+            }
+            else
+            {
+                GameEvent.Send(EventKey.OnEnterNextRound);
+            }
+            
         }
 
         public bool IsGameEnd()

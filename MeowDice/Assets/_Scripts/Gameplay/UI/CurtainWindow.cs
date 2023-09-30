@@ -1,4 +1,5 @@
 using System.Collections;
+using Engine.Runtime;
 using Engine.UI;
 using MeowDice.GamePlay;
 using MeowDice.GamePlay.UI;
@@ -19,6 +20,8 @@ namespace _Scripts.Gameplay.UI
         {
             _curtainText = Go.transform.Find("Curtain/Text").GetComponent<Text>();
             _curtain = Go.transform.Find("Curtain").GetComponent<RectTransform>();
+            GameEvent.AddEventListener(EventKey.OnEnterNextRound, OnEnterNextRound);
+            GameEvent.AddEventListener<bool>(EventKey.OnGameEnd, OnGameEnd);
         }
 
         public void PlayDiceAnimation()
@@ -62,12 +65,18 @@ namespace _Scripts.Gameplay.UI
             MeowDiceCardGame.Instance.EnterActStage();
         }
 
+        public void OnEnterNextRound()
+        {
+            SetVisible(true);
+            PlayEnterNextRound();
+        }
+
         public void PlayEnterNextRound()
         {
             UIModule.Instance.GetWindow<MeowDiceCatInfoWindow>().SetVisible(false);
             _curtain.localPosition = Vector3.zero;
             _curtainText.text = "接下来想让猫咪做什么";
-            MeowDiceCardGame.Instance.RoundEnd();
+            // MeowDiceCardGame.Instance.RoundEnd();
 
             UIModule.Instance.StartCoroutine(CoEnterNextRound());
         }
@@ -79,6 +88,13 @@ namespace _Scripts.Gameplay.UI
             var window = UIModule.Instance.GetWindow<MeowDiceCardGameWindow>();
             window.SetVisible(true);
             window.EnterCardUseStage();
+        }
+
+        public void OnGameEnd(bool isWin)
+        {
+            SetVisible(true);
+            _curtain.localPosition = Vector3.zero;
+            _curtainText.text = isWin ? "胜利" : "失败";
         }
     }
 }

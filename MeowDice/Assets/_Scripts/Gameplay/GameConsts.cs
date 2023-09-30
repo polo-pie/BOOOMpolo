@@ -19,6 +19,8 @@ namespace MeowDice.GamePlay
         public static readonly int UnselectCard = StringId.StringToHash("UnselectCard");
         public static readonly int EnterDiceStage = StringId.StringToHash("EnterDiceStage");
         public static readonly int OnStartAct = StringId.StringToHash("StartAct");
+        public static readonly int OnEnterNextRound = StringId.StringToHash("EnterNextRound");
+        public static readonly int OnGameEnd = StringId.StringToHash("GameEnd");
     }
     
 }
