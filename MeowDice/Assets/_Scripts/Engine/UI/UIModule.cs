@@ -86,6 +86,8 @@ namespace Engine.UI
                 {
                     window.InitData(inputData);
                 }
+                window.SetVisible(true);
+                Push(window);
             }
             else
             {
@@ -102,6 +104,8 @@ namespace Engine.UI
             if (window == null)
                 return;
             
+            Pop(window);
+            window.Close();
         }
 
         private void Push(UIWindow window)

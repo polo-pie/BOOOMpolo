@@ -49,9 +49,9 @@ namespace MeowDice.GamePlay.UI
 
         protected override void OnRefreshData()
         {
-            _cardNameTextData["text"] = Card.cardData.name;
-            _cardTypeTextData["text"] = Card.cardData.cardType.ToString();
-            _diceCostTextData["text"] = Card.cardData.DiceCost.ToString();
+            _cardNameTextData["text"] = Card == null? "" : Card.cardData.Name;
+            _cardTypeTextData["text"] = Card == null? "" : Card.cardData.CardEffets.ToString();
+            _diceCostTextData["text"] = Card == null? "" : Card.cardData.DiceCost.ToString();
         }
 
         protected override void OnRefresh()

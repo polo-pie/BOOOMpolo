@@ -1,0 +1,6 @@
+CardID,Count
+卡牌ID,卡牌数量
+int,int
+1,4
+2,2
+3,4

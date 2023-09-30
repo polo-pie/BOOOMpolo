@@ -53,7 +53,7 @@ namespace Engine.UI
 
         public void SetVisible(bool value)
         {
-            if (_go.activeSelf == value)
+            if (_go.activeSelf == value && _visible == value)
                 return;
             _go.SetActive(value);
             _visible = value;
@@ -100,7 +100,7 @@ namespace Engine.UI
             //     childElement.InitData(outputData);
             // }
             BindProperty();
-            
+
             OnInit();
         }
 
@@ -129,15 +129,15 @@ namespace Engine.UI
 
         #region Element Operate
 
-        public T AddUIElement<T>(GameObject go) where T: UIElement
+        public T AddUIElement<T>(GameObject go, bool visible = true) where T: UIElement
         {
-            var element = AddUIElement(typeof(T), go);
+            var element = AddUIElement(typeof(T), go, visible);
             if (element == null)
                 return null;
             return element as T;
         }
 
-        public UIElement AddUIElement(Type elementType, GameObject go)
+        public UIElement AddUIElement(Type elementType, GameObject go, bool visible = true)
         {
             UIElement element = Activator.CreateInstance(elementType) as UIElement;
             if (element == null)
@@ -164,6 +164,8 @@ namespace Engine.UI
             // DoAddElement(go);
             
             element.OnCreate();
+            
+            element.SetVisible(true);
             
             return element;
         }
