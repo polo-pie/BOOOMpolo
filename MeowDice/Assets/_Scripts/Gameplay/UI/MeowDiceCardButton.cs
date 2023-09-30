@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace MeowDice.GamePlay
+namespace MeowDice.GamePlay.UI
 {
     public class MeowDiceCardButton : Button
     {

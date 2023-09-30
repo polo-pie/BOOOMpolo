@@ -6,7 +6,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Scripts.Gameplay.UI
+namespace MeowDice.GamePlay.UI
 {
     public class MeowDiceCatInfoWindow: UIWindow
     {

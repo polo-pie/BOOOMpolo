@@ -5,7 +5,7 @@ using MeowDice.GamePlay;
 using MeowDice.GamePlay.UI;
 using UnityEngine.UI;
 
-namespace _Scripts.Gameplay.UI
+namespace MeowDice.GamePlay.UI
 {
     public class MeowDiceDiceWidget: UIWidget
     {
