@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using _Scripts.Gameplay.UI;
 using Engine.UI;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace MeowDice.GamePlay.UI
 {
@@ -25,12 +26,14 @@ namespace MeowDice.GamePlay.UI
         protected MeowDiceDiceWidget dice5;
         protected MeowDiceDiceWidget dice6;
 
-        protected Dictionary<string, object> dice1Data = new Dictionary<string, object>() { { "index",  1 } };
-        protected Dictionary<string, object> dice2Data = new Dictionary<string, object>() { { "index",  2 } };
-        protected Dictionary<string, object> dice3Data = new Dictionary<string, object>() { { "index",  3 } };
-        protected Dictionary<string, object> dice4Data = new Dictionary<string, object>() { { "index",  4 } };
-        protected Dictionary<string, object> dice5Data = new Dictionary<string, object>() { { "index",  5 } };
-        protected Dictionary<string, object> dice6Data = new Dictionary<string, object>() { { "index",  6 } };
+        protected Dictionary<string, object> dice1Data = new Dictionary<string, object>() { { "index",  0 } };
+        protected Dictionary<string, object> dice2Data = new Dictionary<string, object>() { { "index",  1 } };
+        protected Dictionary<string, object> dice3Data = new Dictionary<string, object>() { { "index",  2 } };
+        protected Dictionary<string, object> dice4Data = new Dictionary<string, object>() { { "index",  3 } };
+        protected Dictionary<string, object> dice5Data = new Dictionary<string, object>() { { "index",  4 } };
+        protected Dictionary<string, object> dice6Data = new Dictionary<string, object>() { { "index",  5 } };
+
+        protected Button button;
 
 
         protected override void OnCreate()
@@ -40,10 +43,10 @@ namespace MeowDice.GamePlay.UI
             var card3Go = Go.transform.Find("CardLists/Card3").gameObject;
             var card4Go = Go.transform.Find("CardLists/Card4").gameObject;
 
-            card1 = AddUIElement<MeowDiceCardWidget>(card1Go);
-            card2 = AddUIElement<MeowDiceCardWidget>(card2Go);
-            card3 = AddUIElement<MeowDiceCardWidget>(card3Go);
-            card4 = AddUIElement<MeowDiceCardWidget>(card4Go);
+            card1 = AddUIElement<MeowDiceCardWidget>(card1Go, false);
+            card2 = AddUIElement<MeowDiceCardWidget>(card2Go, false);
+            card3 = AddUIElement<MeowDiceCardWidget>(card3Go, false);
+            card4 = AddUIElement<MeowDiceCardWidget>(card4Go, false);
 
             var dice1Go = Go.transform.Find("DiceLists/Dice1").gameObject;
             var dice2Go = Go.transform.Find("DiceLists/Dice2").gameObject;
@@ -59,6 +62,8 @@ namespace MeowDice.GamePlay.UI
             dice5 = AddUIElement<MeowDiceDiceWidget>(dice5Go);
             dice6 = AddUIElement<MeowDiceDiceWidget>(dice6Go);
 
+            button = Go.transform.Find("Button").GetComponent<Button>();
+            button.onClick.AddListener(OnConfirmClick);
         }
 
         protected override void OnRefreshData()
@@ -66,17 +71,20 @@ namespace MeowDice.GamePlay.UI
             var player = MeowDiceCardGame.Instance.Player;
             card1Data["card"] = player.GetCard(0);
             card1Data["index"] = 0;
-            card2Data["card"] = player.GetCard(1);
-            card1Data["index"] = 1;
-            card3Data["card"] = player.GetCard(2);
-            card1Data["index"] = 2;
-            card4Data["card"] = player.GetCard(3);
-            card1Data["index"] = 3;
             
-            card1.SetVisible(card1Data["card"] == null);
-            card2.SetVisible(card2Data["card"] == null);
-            card3.SetVisible(card3Data["card"] == null);
-            card4.SetVisible(card4Data["card"] == null);
+            card2Data["card"] = player.GetCard(1);
+            card2Data["index"] = 1;
+            
+            card3Data["card"] = player.GetCard(2);
+            card3Data["index"] = 2;
+            
+            card4Data["card"] = player.GetCard(3);
+            card4Data["index"] = 3;
+            
+            card1.SetVisible(card1Data["card"] != null);
+            card2.SetVisible(card2Data["card"] != null);
+            card3.SetVisible(card3Data["card"] != null);
+            card4.SetVisible(card4Data["card"] != null);
             
         }
 
@@ -109,6 +117,11 @@ namespace MeowDice.GamePlay.UI
             dice4.RefreshUIElement(dice4Data);
             dice5.RefreshUIElement(dice5Data);
             dice6.RefreshUIElement(dice6Data);
+        }
+
+        private void OnConfirmClick()
+        {
+            MeowDiceCardGame.Instance.EnterDiceStage();
         }
     }
 }

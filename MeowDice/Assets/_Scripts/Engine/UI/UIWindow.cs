@@ -45,6 +45,7 @@ namespace Engine.UI
             _closed = true;
             
             Destroy(true);
+            UIModule.Instance.CloseWindow(GetType());
         }
 
         internal void InternalCreate()
