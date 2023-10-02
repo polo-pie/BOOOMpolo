@@ -26,7 +26,7 @@ namespace MeowDice.GamePlay
         {
             _window.StartGame();
             _catInfoWindow = UIModule.Instance.ShowUI<MeowDiceCatInfoWindow>(new Dictionary<string, object>());
-            _catInfoWindow.SetVisible(false);
+            // _catInfoWindow.SetVisible(false);
             _curtainWindow = UIModule.Instance.ShowUI<CurtainWindow>(new Dictionary<string, object>());
             _curtainWindow.SetVisible(false);
             _selectCardWindow = UIModule.Instance.ShowUI<SelectCardWindow>(new Dictionary<string, object>());
