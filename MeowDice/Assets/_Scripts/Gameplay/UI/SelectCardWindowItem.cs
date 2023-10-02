@@ -16,8 +16,10 @@ namespace MeowDice.GamePlay.UI
         private UIText _cardTypeText;
         private GameObject _diceCostTextGo;
         private UIText _diceCostText;
+        private GameObject _border;
 
         private MeowDiceCardButton _button;
+        private bool _selected;
         
         protected uint CardId => (uint)inputData["cardId"];
         
@@ -38,6 +40,15 @@ namespace MeowDice.GamePlay.UI
 
             _button = Go.GetComponent<MeowDiceCardButton>();
             _button.onClick.AddListener(OnClickCard);
+
+            _border = Go.transform.Find("Border").gameObject;
+
+            GameEvent.AddEventListener<uint>(EventKey.ChooseCard, OnSelectCard);
+        }
+
+        protected override void OnDestroy()
+        {
+            GameEvent.RemoveEventListener<uint>(EventKey.ChooseCard, OnSelectCard);
         }
 
         protected override void BindProperty()
@@ -60,6 +71,7 @@ namespace MeowDice.GamePlay.UI
             _cardNameText.RefreshUIElement(_cardNameTextData);
             _cardTypeText.RefreshUIElement(_cardTypeTextData);
             _diceCostText.RefreshUIElement(_diceCostTextData);
+            _border.SetActive(_selected);
         }
 
         protected override void OnInit()
@@ -69,6 +81,12 @@ namespace MeowDice.GamePlay.UI
         private void OnClickCard()
         {
             GameEvent.Send(EventKey.ChooseCard, CardId);
+        }
+
+        private void OnSelectCard(uint cardId)
+        {
+            _selected = cardId == CardId;
+            OnRefresh();
         }
     }
 }

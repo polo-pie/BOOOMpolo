@@ -36,6 +36,7 @@ namespace MeowDice.GamePlay.UI
             _card3 = AddUIElement<SelectCardWindowItem>(card3Go);
 
             _btnConfirm = Go.transform.Find("BtnConfirm").GetComponent<Button>();
+            _btnConfirm.interactable = false;
             _btnSkip = Go.transform.Find("BtnSkip").GetComponent<Button>();
 
             GameEvent.AddEventListener<uint>(EventKey.ChooseCard, OnChooseCard);
@@ -55,6 +56,7 @@ namespace MeowDice.GamePlay.UI
         private void OnChooseCard(uint cardId)
         {
             _selectCardId = cardId;
+            _btnConfirm.interactable = true;
         }
 
         public void StartSelectCard()
