@@ -1,6 +1,6 @@
 CardID,Effect,Name,Dialogue,DiceCost,CardImage
-å¡ç‰ŒID,æ•ˆæœIDç»„,å¡ç‰Œåç§°,å¡ç‰Œå¯¹è¯ID,éª°ä½,å¡å›¾è·¯å¾„
+¿¨ÅÆID,Ğ§¹ûID×é,¿¨ÅÆÃû³Æ,¿¨ÅÆ¶Ô»°ID,÷»Î»,¿¨Í¼Â·¾¶
 int,intlist,string,intlist,int,string
-1,1|3,ç¡è§‰,1|2,1,
-2,5|6,ç­‰å¾…,3|4,1,
-3,2|4,ç…§é•œå­,5,2,
+1,1|3,Ë¯¾õ,1|2,1,MeowDice\Assets\ArtResources\cards\03.png
+2,5|6,·¢´ô,3|4,1,MeowDice\Assets\ArtResources\cards\01.png
+3,2|4,½øÊ³,5,2,MeowDice\Assets\ArtResources\cards\02.png
