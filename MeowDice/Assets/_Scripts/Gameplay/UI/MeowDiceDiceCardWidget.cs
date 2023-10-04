@@ -2,13 +2,11 @@ using System.Collections.Generic;
 using Engine.Runtime;
 using Engine.SettingModule;
 using Engine.UI;
-using MeowDice.GamePlay;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace MeowDice.GamePlay.UI
 {
-    public class SelectCardWindowItem: UIWidget
+    public class MeowDiceDiceCardWidget: UIWidget
     {
         private GameObject _cardNameTextGo;
         private UIText _cardNameText;
@@ -32,17 +30,8 @@ namespace MeowDice.GamePlay.UI
             _diceCostTextGo = Go.transform.Find("DiceCost/Text").gameObject;
             _diceCostText = AddUIElement<UIText>(_diceCostTextGo);
 
-            _button = Go.GetComponent<MeowDiceCardButton>();
-            _button.onClick.AddListener(OnClickCard);
-
             _border = Go.transform.Find("Border").gameObject;
 
-            GameEvent.AddEventListener<uint>(EventKey.ChooseCard, OnSelectCard);
-        }
-
-        protected override void OnDestroy()
-        {
-            GameEvent.RemoveEventListener<uint>(EventKey.ChooseCard, OnSelectCard);
         }
 
         protected override void BindProperty()
@@ -67,17 +56,6 @@ namespace MeowDice.GamePlay.UI
 
         protected override void OnInit()
         {
-        }
-
-        private void OnClickCard()
-        {
-            GameEvent.Send(EventKey.ChooseCard, CardId);
-        }
-
-        private void OnSelectCard(uint cardId)
-        {
-            _selected = cardId == CardId;
-            OnRefresh();
         }
     }
 }

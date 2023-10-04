@@ -9,7 +9,7 @@ namespace MeowDice.GamePlay.UI
 {
     public class MeowDiceDiceWidget: UIWidget
     {
-        private UIImage _icon;
+        private Image _banIcon;
         private Button _button;
 
         private int _index;
@@ -17,10 +17,9 @@ namespace MeowDice.GamePlay.UI
         
         protected override void OnCreate()
         {
-            var icon = Go.transform.Find("Icon").gameObject;
+            _banIcon = Go.transform.Find("Icon").GetComponent<Image>();
+            
             _button = Go.GetComponent<Button>();
-            _icon = AddUIElement<UIImage>(icon);
-            _button.onClick.AddListener(OnDiceClick);
             GameEvent.AddEventListener<MeowDiceCard>(EventKey.SelectCard, OnSelectCard);
             GameEvent.AddEventListener<MeowDiceCard>(EventKey.UnselectCard, OnUnselectCard);
         }
@@ -33,7 +32,7 @@ namespace MeowDice.GamePlay.UI
 
         protected override void BindProperty()
         {
-            _icon.InitData(_iconData);
+            // _banIcon.InitData(_iconData);
         }
 
         protected override void OnRefreshData()
@@ -56,8 +55,9 @@ namespace MeowDice.GamePlay.UI
 
         protected override void OnRefresh()
         {
-            _icon.SetVisible(MeowDiceCardManager.DiceCount - MeowDiceCardGame.Instance.Player.RemainDiceCount > _index);
-            _icon.RefreshUIElement(_iconData);
+            // _banIcon.gameObject.SetActive(MeowDiceCardManager.DiceCount - MeowDiceCardGame.Instance.Player.RemainDiceCount > _index);
+            // _banIcon.RefreshUIElement(_iconData);
+            
         }
 
         protected override void OnInit()
