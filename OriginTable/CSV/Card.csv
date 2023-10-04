@@ -1,6 +1,6 @@
 CardID,Effect,Name,Dialogue,DiceCost,CardImage
 卡牌ID,效果ID组,卡牌名称,卡牌对话ID,骰位,卡图路径
 int,intlist,string,intlist,int,string
-1,1|3,睡觉,1|2,1,MeowDice\Assets\ArtResources\cards\03.png
-2,5|6,发呆,3|4,1,MeowDice\Assets\ArtResources\cards\01.png
-3,2|4,进食,5,2,MeowDice\Assets\ArtResources\cards\02.png
+0,5|6,发呆,3|4,1,Art\cards\01
+1,1|3,睡觉,1|2,1,Art\cards\03
+2,2|4,进食,5,2,Art\cards\02
