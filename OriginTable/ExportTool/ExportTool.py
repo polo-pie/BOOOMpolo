@@ -18,7 +18,7 @@ def export_excel_to_csv():
 
         if git_root:
             excel_dir = os.path.normpath(os.path.join(git_root, 'OriginTable'))
-            csv_dir = os.path.normpath(os.path.join(git_root, 'OriginTable', 'CSV'))
+            csv_dir = os.path.normpath(os.path.join(git_root, 'MeowDice', 'Assets', 'Resources', 'Table'))
             
             print(excel_dir)
             print(csv_dir)

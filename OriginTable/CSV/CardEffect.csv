@@ -1,9 +1,0 @@
-EffectID,TypeID,EffectTime,Para1,Para2,##Notes
-效果ID,效果类型ID,生效时刻,参数1,参数2,备注
-int,int,int,int,int,
-1,1,1,10,,san值改变（para1）
-2,1,1,-20,,san值改变（para1）
-3,2,1,-10,,警戒度改变（para1）
-4,2,1,10,,警戒度改变（para1）
-5,1,1,0,,san值改变（para1）
-6,2,1,0,,警戒度改变（para1）
