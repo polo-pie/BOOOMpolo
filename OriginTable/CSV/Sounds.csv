@@ -1,0 +1,12 @@
+SoundsID,Sounds_string,Type,ResourceID,PlayCD
+音频调用ID,音频常量名,类型,音频资源调用ID,播放间隔
+int,string,int,intlist,int
+1,BGM_GameScene,1,1,
+2,BGM_MenuScene,1,2,
+3,Scene_DiceRolling,2,3|4|5,
+4,Scene_Meow,2,6|7|8|9|10,5000
+5,UI_Button_Click,2,11,
+6,UI_Button_Cover,2,12,
+7,UI_CardInDice,2,13,
+8,UI_CardSelect,2,14,
+9,UI_Shuffle,2,15,

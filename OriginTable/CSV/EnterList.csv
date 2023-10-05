@@ -1,5 +1,5 @@
 ID,EnterTitle,EnterDescription
-词条ID,词条标题,词条描述
+璇嶆潯ID,璇嶆潯鏍囬,璇嶆潯鎻忚堪
 int,string,string
-1,粘滞,无法从骰子槽中撤销
-2,移除,使用后不进入弃牌堆，从牌库中移除
+1,绮樻粸,鏃犳硶浠庨瀛愭Ы涓挙閿�
+2,绉婚櫎,浣跨敤鍚庝笉杩涘叆寮冪墝鍫嗭紝浠庣墝搴撲腑绉婚櫎
