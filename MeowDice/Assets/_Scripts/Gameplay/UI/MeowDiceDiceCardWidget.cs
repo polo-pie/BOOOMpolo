@@ -12,7 +12,9 @@ namespace MeowDice.GamePlay.UI
         private UIText _cardNameText;
         private GameObject _diceCostTextGo;
         private UIText _diceCostText;
-        private GameObject _border;
+        
+        private GameObject _cardImageGo;
+        private UIImage _cardImage;
 
         private MeowDiceCardButton _button;
         private bool _selected;
@@ -21,7 +23,8 @@ namespace MeowDice.GamePlay.UI
         
         private Dictionary<string, object> _cardNameTextData = new Dictionary<string, object>();
         private Dictionary<string, object> _diceCostTextData = new Dictionary<string, object>();
-        
+        private Dictionary<string, object> _cardImageData = new Dictionary<string, object>();
+
         protected override void OnCreate()
         {
             _cardNameTextGo = Go.transform.Find("CardName/Text").gameObject;
@@ -30,14 +33,15 @@ namespace MeowDice.GamePlay.UI
             _diceCostTextGo = Go.transform.Find("DiceCost/Text").gameObject;
             _diceCostText = AddUIElement<UIText>(_diceCostTextGo);
 
-            _border = Go.transform.Find("Border").gameObject;
-
+            _cardImageGo = Go.transform.Find("Image").gameObject;
+            _cardImage = AddUIElement<UIImage>(_cardImageGo);
         }
 
         protected override void BindProperty()
         {
             _cardNameText.InitData(_cardNameTextData);
             _diceCostText.InitData(_diceCostTextData);
+            _cardImage.InitData(_cardImageData);
         }
 
         protected override void OnRefreshData()
@@ -45,13 +49,14 @@ namespace MeowDice.GamePlay.UI
             var table = TableModule.Get("Card");
             _cardNameTextData["text"] = table.GetData(CardId, "Name");
             _diceCostTextData["text"] = table.GetData(CardId, "DiceCost");
+            _cardImageData["path"] = table.GetData(CardId, "CardImage");
         }
 
         protected override void OnRefresh()
         {
             _cardNameText.RefreshUIElement(_cardNameTextData);
             _diceCostText.RefreshUIElement(_diceCostTextData);
-            _border.SetActive(_selected);
+            _cardImage.RefreshUIElement(_cardImageData);
         }
 
         protected override void OnInit()
