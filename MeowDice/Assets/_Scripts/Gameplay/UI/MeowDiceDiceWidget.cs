@@ -11,17 +11,21 @@ namespace MeowDice.GamePlay.UI
     {
         private Image _banIcon;
         private Button _button;
+        private MeowDiceDiceCardWidget _card;
 
         private int _index;
-        private Dictionary<string, object> _iconData = new Dictionary<string, object>();
+        private Dictionary<string, object> _cardData = new Dictionary<string, object>();
         
         protected override void OnCreate()
         {
             _banIcon = Go.transform.Find("Icon").GetComponent<Image>();
+            var cardGo = Go.transform.Find("Card").gameObject;
+            _card = AddUIElement<MeowDiceDiceCardWidget>(cardGo);
             
             _button = Go.GetComponent<Button>();
             GameEvent.AddEventListener<MeowDiceCard>(EventKey.SelectCard, OnSelectCard);
             GameEvent.AddEventListener<MeowDiceCard>(EventKey.UnselectCard, OnUnselectCard);
+            _button.onClick.AddListener(OnDiceClick);
         }
 
         protected override void OnDestroy()
@@ -33,31 +37,31 @@ namespace MeowDice.GamePlay.UI
         protected override void BindProperty()
         {
             // _banIcon.InitData(_iconData);
+            _banIcon.gameObject.SetActive(false);
+            
         }
 
         protected override void OnRefreshData()
         {
-            _iconData["path"] = "";
-            // foreach (var card in MeowDiceCardGame.Instance.Player.selectedCards)
-            for(int i = 0; i < MeowDiceCardGame.Instance.Player.selectedCards.Count; i ++)
-            {
-                var card = MeowDiceCardGame.Instance.Player.selectedCards[i];
-                if(card != null)
-                { 
-                    if (i == _index)
-                    {
-                        _iconData["path"] = "";
-                        break;
-                    }
-                }
-            }
+            _cardData["cardId"] = GetCardId();
         }
 
         protected override void OnRefresh()
         {
             // _banIcon.gameObject.SetActive(MeowDiceCardManager.DiceCount - MeowDiceCardGame.Instance.Player.RemainDiceCount > _index);
             // _banIcon.RefreshUIElement(_iconData);
-            
+            if ((int)_cardData["cardId"] != -1)
+            {
+                _cardData["cardId"] = uint.Parse(_cardData["cardId"].ToString());
+                _card.SetVisible(true);
+                _card.RefreshUIElement(_cardData);
+                // _banIcon.gameObject.SetActive(false);
+            }
+            else
+            {
+                _card.SetVisible(false);
+                // _banIcon.gameObject.SetActive(true);
+            }
         }
 
         protected override void OnInit()
@@ -65,10 +69,21 @@ namespace MeowDice.GamePlay.UI
             _index = (int)inputData["index"];
         }
 
-        private void GetCardImagePath()
+        private int GetCardId()
         {
-            
+            var card = MeowDiceCardGame.Instance.Player.selectedCards[_index];
 
+            if (card != null)
+            {
+                return (int)card.cardId;
+            }
+
+            if (_index < MeowDiceCardManager.DiceCount - MeowDiceCardGame.Instance.Player.RemainDiceCount)
+            {
+                return 0;
+            }
+
+            return -1;
         }
 
         private void OnDiceClick()

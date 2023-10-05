@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: bbf66a35a7fe77545b84d4dc38815995
+=======
+guid: 570ab61a24fe8408cacb228a999f8fcd
+>>>>>>> b380727 (骰子动画添加)
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
