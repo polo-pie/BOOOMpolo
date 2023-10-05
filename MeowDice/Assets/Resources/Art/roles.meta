@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 629decca55b8aa74c9d5968c03253fa4
+=======
+guid: 8634966a5ca26441592cd6517eeff3f0
+>>>>>>> b380727 (骰子动画添加)
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

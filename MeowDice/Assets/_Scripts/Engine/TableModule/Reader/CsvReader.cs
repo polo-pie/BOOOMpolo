@@ -29,7 +29,8 @@ public class CsvReader
             Debug.Log("CSV file loaded: " + "Table/" + fileName);
         }
 
-        string fileContent = csvFile.text;
+        string fileContent = Encoding.UTF8.GetString(csvFile.bytes);
+        
 
         if (encrypted)
         {

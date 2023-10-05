@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Engine.SettingModule;
 using Engine.UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,8 @@ namespace MeowDice.GamePlay.UI
         private UIText _cardNameText;
         private GameObject _diceCostTextGo;
         private UIText _diceCostText;
+        private GameObject _cardImageGo;
+        private UIImage _cardImage;
 
         private MeowDiceCardButton _button;
         
@@ -18,9 +21,9 @@ namespace MeowDice.GamePlay.UI
         private int _index;
         
         private Dictionary<string, object> _cardNameTextData = new Dictionary<string, object>();
-        private Dictionary<string, object> _cardTypeTextData = new Dictionary<string, object>();
         private Dictionary<string, object> _diceCostTextData = new Dictionary<string, object>();
-        
+        private Dictionary<string, object> _cardImageData = new Dictionary<string, object>();
+
         protected override void OnCreate()
         {
             _cardNameTextGo = Go.transform.Find("CardName/Text").gameObject;
@@ -28,6 +31,9 @@ namespace MeowDice.GamePlay.UI
 
             _diceCostTextGo = Go.transform.Find("DiceCost/Text").gameObject;
             _diceCostText = AddUIElement<UIText>(_diceCostTextGo);
+
+            _cardImageGo = Go.transform.Find("Image").gameObject;
+            _cardImage = AddUIElement<UIImage>(_cardImageGo);
 
             _button = Go.GetComponent<MeowDiceCardButton>();
             _button.OnPointerEnterCallback += OnPointerEnter;
@@ -39,19 +45,22 @@ namespace MeowDice.GamePlay.UI
         {
             _cardNameText.InitData(_cardNameTextData);
             _diceCostText.InitData(_diceCostTextData);
+            _cardImage.InitData(_cardImageData);
         }
 
         protected override void OnRefreshData()
         {
             _cardNameTextData["text"] = Card == null? "" : Card.cardData.Name;
-            _cardTypeTextData["text"] = Card == null? "" : Card.cardData.CardEffets.ToString();
             _diceCostTextData["text"] = Card == null? "" : Card.cardData.DiceCost.ToString();
+            var table = TableModule.Get("Card");
+            _cardImageData["path"] = Card == null ? "" : table.GetData(Card.cardId, "CardImage");
         }
 
         protected override void OnRefresh()
         {
             _cardNameText.RefreshUIElement(_cardNameTextData);
             _diceCostText.RefreshUIElement(_diceCostTextData);
+            _cardImage.RefreshUIElement(_cardImageData);
         }
 
         protected override void OnInit()
