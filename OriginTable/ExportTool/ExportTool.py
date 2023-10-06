@@ -36,12 +36,37 @@ def export_excel_to_csv():
                     
                     # 遍历Excel中的所有sheet
                     for sheet_name in xls.sheet_names:
-                        df = pd.read_excel(excel_path, sheet_name=sheet_name)
-                        
+                        # 读取前三行
+                        header_df = pd.read_excel(excel_path, sheet_name=sheet_name, nrows=3)
+                        print("Header DF shape:", header_df.shape)
+                        print("Header DF sample:", header_df.head())
+
+                        # 读取剩下的数据，跳过前三行，并设置列名
+                        data_df = pd.read_excel(excel_path, sheet_name=sheet_name, skiprows=3, names=header_df.columns)
+                        print("Data DF shape:", data_df.shape)
+                        print("Data DF sample:", data_df.head())
+
+                        # 如果存在'IsExport'列，并且该列有非NaN的值，过滤掉标记为“不导出”的行
+                        if 'IsExport' in data_df.columns and data_df['IsExport'].notna().any():
+                            data_df = data_df[data_df['IsExport'] != 1]
+                        print("Filtered Data DF shape:", data_df.shape)
+                        print("Filtered Data DF sample:", data_df.head())
+
+                        # 重置data_df的索引
+                        data_df.reset_index(drop=True, inplace=True)
+
+                        # 确保两个数据框有相同的列
+                        data_df = data_df.reindex(columns=header_df.columns)
+
+                        # 合并两个数据框
+                        final_df = pd.concat([header_df, data_df], ignore_index=True)
+                        print("Final DF shape:", final_df.shape)
+                        print("Final DF sample:", final_df.head())
+
                         # 保存为CSV文件
                         csv_filename = f"{sheet_name}.csv"
                         csv_path = os.path.join(csv_dir, csv_filename)
-                        df.to_csv(csv_path, index=False)
+                        final_df.to_csv(csv_path, index=False)
 
             success_label.config(text="导表成功")
         else:

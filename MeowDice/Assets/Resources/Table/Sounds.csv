@@ -4,7 +4,7 @@ int,string,int,intlist,int
 1,BGM_GameScene,1,1,
 2,BGM_MenuScene,1,2,
 3,Scene_DiceRolling,2,3|4|5,
-4,Scene_Meow,2,6|7|8|9|10,5000
+4,Scene_Meow,2,6|7|8|9|10,5000.0
 5,UI_Button_Click,2,11,
 6,UI_Button_Cover,2,12,
 7,UI_CardInDice,2,13,
