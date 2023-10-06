@@ -2,7 +2,7 @@ ID,Const_string,Type,Para1,Para2,##Notes
 ID,常量名,枚举类型,参数1,参数2,备注
 int,string,int,int,int,
 1,San_Limit,1,0,100,初始的san值上下限，para1为下限，para2为上限
-2,Alert_Limit,1,0,100,初始的警戒值上下限，para1为下限，para2为上限
+2,Alert_Limit,1,0,100.0,初始的警戒值上下限，para1为下限，para2为上限
 3,San_Initialize,1,60,,初始的猫咪san值（para1）
 4,Alert_Initialize,1,0,,初始的猫咪警戒值（para1）
 5,Deal_Count,1,4,,每回合发牌的张数（para1）

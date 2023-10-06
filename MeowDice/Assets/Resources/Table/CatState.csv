@@ -1,0 +1,5 @@
+ID,EffectID,StateTitle,StateDes,StateIcon
+状态唯一ID,状态效果,状态标题,状态描述,状态图标
+int,intlist,string,string,string
+1,1,躁狂,骰出的点数比层数低时，san值改变均+当回合骰面点数\nSan值降低时，层数-1.,Art\ui\gaming\icon_fennu.png
+2,2,入梦,每回合安抚值不会消失。,Art\ui\gaming\icon_shuijiao.png
