@@ -88,6 +88,7 @@ namespace MeowDice.GamePlay.UI
             MeowDiceCardGame.Instance.EnterActStage();
             _curtain.gameObject.SetActive(true);
             _dicePanel.SetActive(false);
+            SetVisible(false);
         }
 
         public void OnEnterNextRound()

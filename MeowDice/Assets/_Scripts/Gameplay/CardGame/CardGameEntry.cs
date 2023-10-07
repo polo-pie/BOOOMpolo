@@ -11,6 +11,8 @@ namespace MeowDice.GamePlay
 {
     public class CardGameEntry : MonoBehaviour
     {
+        public List<CatPosition> catPositions;
+
         private MeowDiceCardGameWindow _window;
         private MeowDiceCatInfoWindow _catInfoWindow;
         private CurtainWindow _curtainWindow;

@@ -23,7 +23,7 @@ namespace MeowDice.GamePlay.UI
         private Dictionary<string, object> _card2Data = new Dictionary<string, object>();
         private Dictionary<string, object> _card3Data = new Dictionary<string, object>();
 
-        private uint _selectCardId = 0;
+        private int _selectCardId = 0;
 
         protected override void OnCreate()
         {
@@ -55,7 +55,7 @@ namespace MeowDice.GamePlay.UI
 
         private void OnChooseCard(uint cardId)
         {
-            _selectCardId = cardId;
+            _selectCardId = (int)cardId;
             _btnConfirm.interactable = true;
         }
 
@@ -66,10 +66,13 @@ namespace MeowDice.GamePlay.UI
             _card2Data["cardId"] = cardIds[1];
             _card3Data["cardId"] = cardIds[2];
             
+            _card1.UnSelect();
             _card1.RefreshUIElement(_card1Data);
+            _card2.UnSelect();
             _card2.RefreshUIElement(_card2Data);
+            _card3.UnSelect();
             _card3.RefreshUIElement(_card3Data);
-            _selectCardId = 0;
+            _selectCardId = -1;
         }
 
         public void OnEnterNextRound()
@@ -80,13 +83,13 @@ namespace MeowDice.GamePlay.UI
 
         private void OnClickConfirm()
         {
-            if (_selectCardId == 0)
+            if (_selectCardId == -1)
             {
                 Debug.LogError("[Game][SelectCardWindow][OnClickConfirm] selectCardId is 0");
                 return;
             }
 
-            MeowDiceCardGame.Instance.CardManager.AddCard(_selectCardId);
+            MeowDiceCardGame.Instance.CardManager.AddCard((uint)_selectCardId);
             SetVisible(false);
             var window = UIModule.Instance.GetWindow<CurtainWindow>();
             window.OnEnterNextRound();
