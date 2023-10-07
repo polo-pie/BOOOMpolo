@@ -33,18 +33,18 @@ namespace MeowDice.GamePlay.UI
 
         protected override void BindProperty()
         {
-            _sanSlider.value = (float)_cat.sanValue / _cat.MaxSanValue;
-            _alterSlider.value = (float)_cat.altertValue / _cat.MaxAlterValue;
-            _sanText.text = $"{_cat.sanValue}/{_cat.MaxSanValue}";
-            _alterText.text = $"{_cat.altertValue}/{_cat.MaxAlterValue}";
+            _sanSlider.value = (float)_cat.SanValue / _cat.MaxSanValue;
+            _alterSlider.value = (float)_cat.AlterValue / _cat.MaxAlterValue;
+            _sanText.text = $"{_cat.SanValue}/{_cat.MaxSanValue}";
+            _alterText.text = $"{_cat.AlterValue}/{_cat.MaxAlterValue}";
         }
 
         protected override void OnRefresh()
         {
-            _sanSlider.value = (float)_cat.sanValue / _cat.MaxSanValue;
-            _alterSlider.value = (float)_cat.altertValue / _cat.MaxAlterValue;
-            _sanText.text = $"{_cat.sanValue}/{_cat.MaxSanValue}";
-            _alterText.text = $"{_cat.altertValue}/{_cat.MaxAlterValue}";
+            _sanSlider.value = (float)_cat.SanValue / _cat.MaxSanValue;
+            _alterSlider.value = (float)_cat.AlterValue / _cat.MaxAlterValue;
+            _sanText.text = $"{_cat.SanValue}/{_cat.MaxSanValue}";
+            _alterText.text = $"{_cat.AlterValue}/{_cat.MaxAlterValue}";
         }
 
         private void OnStartAct(uint cardId, int alterChange, int sanChange)
@@ -59,8 +59,8 @@ namespace MeowDice.GamePlay.UI
             var currentSanValue = _sanSlider.value;
             var currentAlterValue = _alterSlider.value;
 
-            var targetSanValue = (float)_cat.sanValue / _cat.MaxSanValue;
-            var targetAlterValue = (float)_cat.altertValue / _cat.MaxAlterValue;
+            var targetSanValue = (float)_cat.SanValue / _cat.MaxSanValue;
+            var targetAlterValue = (float)_cat.AlterValue / _cat.MaxAlterValue;
 
             float time = 0;
             float showTime = 1;
@@ -77,8 +77,8 @@ namespace MeowDice.GamePlay.UI
 
             _sanSlider.value = targetSanValue;
             _alterSlider.value = targetAlterValue;
-            _sanText.text = $"{_cat.sanValue}/{_cat.MaxSanValue}";
-            _alterText.text = $"{_cat.altertValue}/{_cat.MaxAlterValue}";
+            _sanText.text = $"{_cat.SanValue}/{_cat.MaxSanValue}";
+            _alterText.text = $"{_cat.AlterValue}/{_cat.MaxAlterValue}";
 
             MeowDiceCardGame.Instance.RoundEnd();
         }

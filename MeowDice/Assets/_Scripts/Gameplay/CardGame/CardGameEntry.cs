@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection.Emit;
+using Engine;
 using Engine.Runtime;
+using Engine.SettingModule;
 using Engine.UI;
 using MeowDice.GamePlay.UI;
 using UnityEngine;
@@ -13,6 +15,8 @@ namespace MeowDice.GamePlay
     {
         public List<CatPosition> catPositions;
 
+        private Dictionary<int, GameObject> cats;
+
         private MeowDiceCardGameWindow _window;
         private MeowDiceCatInfoWindow _catInfoWindow;
         private CurtainWindow _curtainWindow;
@@ -22,6 +26,22 @@ namespace MeowDice.GamePlay
         {
             MeowDiceCardGame.Instance.GameInit();
             _window = UIModule.Instance.ShowUI<MeowDiceCardGameWindow>(new Dictionary<string, object>());
+
+            cats = new Dictionary<int, GameObject>();
+            foreach (var catPosition in catPositions)
+            {
+                cats[catPosition.index] = catPosition.transform.gameObject;
+                catPosition.transform.gameObject.SetActive(false);
+            }
+
+            GameEvent.AddEventListener(EventKey.OnNextRound, OnRoundEnd);
+            GameEvent.AddEventListener<uint>(EventKey.DoCatAct, DoCatAct);
+        }
+
+        private void OnDestroy()
+        {
+            GameEvent.RemoveEventListener(EventKey.OnNextRound, OnRoundEnd);
+            GameEvent.RemoveEventListener<uint>(EventKey.DoCatAct, DoCatAct);
         }
 
         private void Start()
@@ -34,6 +54,27 @@ namespace MeowDice.GamePlay
             _selectCardWindow = UIModule.Instance.ShowUI<SelectCardWindow>(new Dictionary<string, object>());
             _selectCardWindow.SetVisible(false);
 
+        }
+
+        public void DoCatAct(uint cardId)
+        {
+            var table = TableModule.Get("Card");
+            var acts = table.GetData(cardId, "CatPerformance") as List<int>;
+            foreach (var act in acts)
+            {
+                if (cats.ContainsKey(act))
+                {
+                    cats[act].SetActive(true);
+                }
+            }
+        }
+
+        public void OnRoundEnd()
+        {
+            foreach (var catPosition in catPositions)
+            {
+                catPosition.transform.gameObject.SetActive(false);
+            }
         }
     }
 }
