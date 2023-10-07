@@ -2,6 +2,7 @@ using System.Collections;
 using Engine.Runtime;
 using Engine.UI;
 using MeowDice.GamePlay;
+using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,11 @@ namespace MeowDice.GamePlay.UI
         private Text _sanText;
         private Text _alterText;
 
+        private CatStateButton _angryStateBtn;
+        private CatStateButton _memoryStateBtn;
+        private TextMeshProUGUI _stateText;
+        private GameObject _description;
+
         private Slider _sanSlider;
         private Slider _alterSlider;
 
@@ -29,6 +35,15 @@ namespace MeowDice.GamePlay.UI
             GameEvent.AddEventListener<uint, int, int>(EventKey.OnStartAct, OnStartAct);
             _cat = MeowDiceCardGame.Instance.Cat;
 
+            _angryStateBtn = Go.transform.Find("States/AngryState").GetComponent<CatStateButton>();
+            _memoryStateBtn = Go.transform.Find("States/MemoryState").GetComponent<CatStateButton>();
+            _stateText = Go.transform.Find("Des/Text").GetComponent<TextMeshProUGUI>();
+            _description = Go.transform.Find("Des").gameObject;
+
+            _angryStateBtn.OnPointerEnterCallback = ShowAngryStateDetail;
+            _angryStateBtn.OnPointerExitCallback = HideStateDetail;
+            _memoryStateBtn.OnPointerEnterCallback = ShowMemoryStateDetail;
+            _memoryStateBtn.OnPointerExitCallback = HideStateDetail;
         }
 
         protected override void BindProperty()
@@ -37,6 +52,9 @@ namespace MeowDice.GamePlay.UI
             _alterSlider.value = (float)_cat.AlterValue / _cat.MaxAlterValue;
             _sanText.text = $"{_cat.SanValue}/{_cat.MaxSanValue}";
             _alterText.text = $"{_cat.AlterValue}/{_cat.MaxAlterValue}";
+            _angryStateBtn.gameObject.SetActive(_cat.angryStateCount > 0);
+            _memoryStateBtn.gameObject.SetActive(_cat.memoryStateCount > 0);
+            _description.SetActive(false);
         }
 
         protected override void OnRefresh()
@@ -45,6 +63,8 @@ namespace MeowDice.GamePlay.UI
             _alterSlider.value = (float)_cat.AlterValue / _cat.MaxAlterValue;
             _sanText.text = $"{_cat.SanValue}/{_cat.MaxSanValue}";
             _alterText.text = $"{_cat.AlterValue}/{_cat.MaxAlterValue}";
+            _angryStateBtn.gameObject.SetActive(_cat.angryStateCount > 0);
+            _memoryStateBtn.gameObject.SetActive(_cat.memoryStateCount > 0);
         }
 
         private void OnStartAct(uint cardId, int alterChange, int sanChange)
@@ -81,6 +101,23 @@ namespace MeowDice.GamePlay.UI
             _alterText.text = $"{_cat.AlterValue}/{_cat.MaxAlterValue}";
 
             MeowDiceCardGame.Instance.RoundEnd();
+        }
+
+        private void ShowAngryStateDetail()
+        {
+            _description.SetActive(true);
+            _stateText.text = $"愤怒/n持续{_cat.angryStateCount}回合";
+        }
+
+        private void ShowMemoryStateDetail()
+        {
+            _description.SetActive(true);
+            _stateText.text = $"入梦/n持续{_cat.angryStateCount}回合";
+        }
+
+        private void HideStateDetail()
+        {
+            _description.SetActive(false);
         }
     }
 }
