@@ -18,8 +18,9 @@ namespace MeowDice.GamePlay
     public struct MeowDiceCardData
     {
         public string Name;
-        public List<int> CardEffets;
+        public List<int> CardEffects;
         public int DiceCost;
+        public string Description;
     }
 
     public class MeowDiceCard
@@ -38,8 +39,9 @@ namespace MeowDice.GamePlay
             cardData = new MeowDiceCardData()
             {
                 Name=table.GetData(cardId, "Name").ToString(),
-                CardEffets=table.GetData(cardId, "Effect") as List<int>,
-                DiceCost=(int)table.GetData(cardId, "DiceCost")
+                CardEffects=table.GetData(cardId, "Effect") as List<int>,
+                DiceCost=(int)table.GetData(cardId, "DiceCost"),
+                Description = table.GetData(cardId, "CardDes").ToString()
             };
             canUnselect = true;
         }
@@ -55,7 +57,7 @@ namespace MeowDice.GamePlay
                 { "card", this }, { "dice", MeowDiceCardGame.Instance.CardManager.RandomSelectCardIndex + 1 }, {"sanChangeDec", 0}, {"comfortChangeDec", 0},
                 {"sanChange", 0}, {"alterChange", 0}, {"comfortChange", 0}
             };
-            foreach (uint effetId in cardData.CardEffets)
+            foreach (uint effetId in cardData.CardEffects)
             {
                 var typeId = (int)table.GetData(effetId, "TypeID");
                 var para1 = (int)table.GetData(effetId, "Para1");

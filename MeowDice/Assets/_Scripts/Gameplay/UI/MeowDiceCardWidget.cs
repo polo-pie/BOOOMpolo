@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using Engine.SettingModule;
 using Engine.UI;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 namespace MeowDice.GamePlay.UI
@@ -16,6 +18,11 @@ namespace MeowDice.GamePlay.UI
         private UIImage _cardImage;
 
         private MeowDiceCardButton _button;
+
+        private GameObject _cardDescription;
+        private Text _cardTitleText;
+        private TextMeshProUGUI _cardDescriptionText;
+        private Canvas _canvas;
         
         protected MeowDiceCard Card => inputData["card"] as MeowDiceCard;
         private int _index;
@@ -35,10 +42,16 @@ namespace MeowDice.GamePlay.UI
             _cardImageGo = Go.transform.Find("Image").gameObject;
             _cardImage = AddUIElement<UIImage>(_cardImageGo);
 
+            _cardDescription = Go.transform.Find("CardDescription").gameObject;
+            _cardTitleText = Go.transform.Find("CardDescription/Title/Text").GetComponent<Text>();
+            _cardDescriptionText = Go.transform.Find("CardDescription/Description/Text").GetComponent<TextMeshProUGUI>();
+
             _button = Go.GetComponent<MeowDiceCardButton>();
             _button.OnPointerEnterCallback += OnPointerEnter;
             _button.OnPointerExitCallback += OnPointerExit;
             _button.onClick.AddListener(OnClickCard);
+
+            _canvas = Go.GetComponent<Canvas>();
         }
 
         protected override void BindProperty()
@@ -46,6 +59,8 @@ namespace MeowDice.GamePlay.UI
             _cardNameText.InitData(_cardNameTextData);
             _diceCostText.InitData(_diceCostTextData);
             _cardImage.InitData(_cardImageData);
+            _cardTitleText.text = Card == null ? "" : Card.cardData.Name;
+            _cardDescriptionText.text = Card == null ? "" : Card.cardData.Description;
         }
 
         protected override void OnRefreshData()
@@ -61,6 +76,8 @@ namespace MeowDice.GamePlay.UI
             _cardNameText.RefreshUIElement(_cardNameTextData);
             _diceCostText.RefreshUIElement(_diceCostTextData);
             _cardImage.RefreshUIElement(_cardImageData);
+            _cardTitleText.text = Card == null ? "" : Card.cardData.Name;
+            _cardDescriptionText.text = Card == null ? "" : Card.cardData.Description;
         }
 
         protected override void OnInit()
@@ -70,12 +87,16 @@ namespace MeowDice.GamePlay.UI
 
         private void OnPointerEnter()
         {
-            RectTransform.localScale = Vector3.one * 1.5f;
+            RectTransform.localScale = Vector3.one * 1.1f;
+            _cardDescription.SetActive(true);
+            _canvas.sortingOrder = 10;
         }
 
         private void OnPointerExit()
         {
             RectTransform.localScale = Vector3.one;
+            _cardDescription.SetActive(false);
+            _canvas.sortingOrder = 1;
         }
 
         private void OnClickCard()
