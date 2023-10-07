@@ -100,7 +100,7 @@ namespace MeowDice.GamePlay.UI
 
         public void PlayEnterNextRound()
         {
-            UIModule.Instance.GetWindow<MeowDiceCatInfoWindow>().SetVisible(false);
+            // UIModule.Instance.GetWindow<MeowDiceCatInfoWindow>().SetVisible(false);
             _curtain.localPosition = Vector3.zero;
             _curtainText.text = "接下来想让猫咪做什么";
             // MeowDiceCardGame.Instance.RoundEnd();

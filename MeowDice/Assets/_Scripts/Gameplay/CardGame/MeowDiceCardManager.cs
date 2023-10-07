@@ -46,7 +46,7 @@ namespace MeowDice.GamePlay
             // 卡牌数小于每回合发牌数
             if (cards.Count < SettingModule.Instance.GlobalConfig.DealCount)
             {
-                for (int i = droppedCards.Count - 1; i > 0; i--)
+                for (int i = droppedCards.Count - 1; i >= 0; i--)
                 {
                     var index = Random.Range(0, i + 1);
                     cards.Enqueue(droppedCards[index]);
