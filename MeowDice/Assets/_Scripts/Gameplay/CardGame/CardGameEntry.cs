@@ -42,6 +42,10 @@ namespace MeowDice.GamePlay
         {
             GameEvent.RemoveEventListener(EventKey.OnNextRound, OnRoundEnd);
             GameEvent.RemoveEventListener<uint>(EventKey.DoCatAct, DoCatAct);
+            _window.Close();
+            _catInfoWindow.Close();
+            _curtainWindow.Close();
+            _selectCardWindow.Close();
         }
 
         private void Start()
