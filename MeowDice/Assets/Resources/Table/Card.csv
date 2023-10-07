@@ -3,7 +3,7 @@ CardID,Effect,Name,Dialogue,DiceCost,CardImage,CardDes,EnterID,CatPerformance,Is
 int,intlist,string,intlist,int,string,string,intlist,intlist,int
 0,30,空白,5,1,Art\cards\13,无事发生,,3,0
 1,11,睡觉,1|2,1,Art\cards\03,安抚值+10,5.0,16,0
-2,1|19,进食,5,1,Art\cards\02,理智+10，警戒度-10,,15,0
+2,6|31,进食,5,1,Art\cards\02,理智-10，警戒度+10,,15,0
 3,23,猫草,5,1,Art\cards\04,产生1*骰子点数的【躁狂】层数,3.0,9,0
 4,3,种草猫？,5,3,Art\cards\06,理智-30,,22,0
 5,20|24,三重身,5,3,Art\cards\05,产生3*骰子点数的【躁狂】层数，警戒度+20,3.0,6|1|10|12,0
@@ -22,5 +22,5 @@ int,intlist,string,intlist,int,string,string,intlist,intlist,int
 18,16,薛定谔的数字,5,6,Art\cards\19,警戒度-50,,4,0
 19,8|15,液体猫,5,1,Art\cards\20,理智+1，安抚值+99,5.0,5,0
 20,28,不公正的骰子,5,6,Art\cards\21,产生6*骰子点数的【入梦】层数,4.0,20,0
-21,9|16,对赌,5,3,Art\cards\22,理智+50，警戒度-50,,2,0
+21,4|22,对赌,5,3,Art\cards\22,理智-50，警戒度+50,,2,0
 22,10,傻猫,5,2,Art\cards\23,理智+80,,22,0
