@@ -1,5 +1,8 @@
+using System.Collections.Generic;
 using Engine.Runtime;
+using Engine.UI;
 using MeowDice.GamePlay.Settings;
+using MeowDice.GamePlay.UI;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 
@@ -62,6 +65,7 @@ namespace MeowDice.GamePlay
         {
             _roundStage = RoundStage.CardUse;
             _cardManager.OnRoundStart();
+            UIModule.Instance.GetWindow<MeowDiceCatInfoWindow>()?.RefreshUIElement(new Dictionary<string, object>());
         }
 
         public void EnterDiceStage()
