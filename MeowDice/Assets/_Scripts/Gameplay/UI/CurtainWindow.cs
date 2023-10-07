@@ -105,6 +105,7 @@ namespace MeowDice.GamePlay.UI
             // MeowDiceCardGame.Instance.RoundEnd();
 
             UIModule.Instance.StartCoroutine(CoEnterNextRound());
+            GameEvent.Send(EventKey.OnNextRound);
         }
 
         IEnumerator CoEnterNextRound()

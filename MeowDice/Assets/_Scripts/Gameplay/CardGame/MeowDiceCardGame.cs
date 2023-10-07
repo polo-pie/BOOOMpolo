@@ -35,12 +35,12 @@ namespace MeowDice.GamePlay
         {
             _player.OnRoundEnd();
 
-            if (_cat.altertValue >= SettingModule.Instance.GlobalConfig.AlterLimit.y)
+            if (_cat.AlterValue >= SettingModule.Instance.GlobalConfig.AlterLimit.y)
             {
                 _gameEnd = true;
                 GameEvent.Send(EventKey.OnGameEnd, false);
             }
-            else if (_cat.sanValue <= SettingModule.Instance.GlobalConfig.SanLimit.x)
+            else if (_cat.SanValue <= SettingModule.Instance.GlobalConfig.SanLimit.x)
             {
                 _gameEnd = true;
                 GameEvent.Send(EventKey.OnGameEnd, true);
@@ -86,7 +86,6 @@ namespace MeowDice.GamePlay
             _roundStage = RoundStage.CardUse;
 
             _cardManager.DoCardEffect();
-
         }
 
 

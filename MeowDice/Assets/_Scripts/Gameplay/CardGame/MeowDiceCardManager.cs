@@ -9,6 +9,13 @@ using Random = UnityEngine.Random;
 
 namespace MeowDice.GamePlay
 {
+    public class CardEffectTime
+    {
+        public const int CardUse = 1;
+        public const int CardSelect = 2;
+        public const int CardInDice = 3;
+    }
+    
     public class MeowDiceCardManager
     {
         public List<MeowDiceCard> PlayerCards => MeowDiceCardGame.Instance.Player.cards;
@@ -100,10 +107,12 @@ namespace MeowDice.GamePlay
             }
             else
             {
-                card.DoEffect(out var alterChange, out var sanChange);
+                card.DoEffect(CardEffectTime.CardUse ,out var alterChange, out var sanChange, out var comfortChange);
+                _game.Cat.ComfortChange(comfortChange);
                 _game.Cat.AlterChange(alterChange);
                 _game.Cat.SanChange(sanChange);
                 GameEvent.Send(EventKey.OnStartAct, card.cardId, alterChange, sanChange);
+                GameEvent.Send(EventKey.DoCatAct, card.cardId);
             }
         }
 
@@ -113,7 +122,7 @@ namespace MeowDice.GamePlay
             var cardIds = table.csvData.Keys.ToArray();
             for (int i = cardIds.Length - 1; i > 0; i--)
             {
-                var pos = Random.Range(0, i + 1);
+                var pos = Random.Range(0, i - 1);
                 (cardIds[pos], cardIds[i]) = (cardIds[i], cardIds[pos]);
             }
             
