@@ -80,6 +80,7 @@ namespace MeowDice.GamePlay.UI
 
         private void OnClickCard()
         {
+            SoundModule.Instance.PlayAudio(14);
             MeowDiceCardGame.Instance.Player.SelectCard(_index);
         }
     }

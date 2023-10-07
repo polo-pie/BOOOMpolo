@@ -29,17 +29,19 @@ namespace MeowDice.GamePlay
 
         private void StartGame()
         {
+            SoundModule.Instance.PlayAudio(11);
             SceneManager.LoadScene(1);
             Close();
         }
 
         private void ShowSettingWindow()
         {
-            
+            SoundModule.Instance.PlayAudio(11);
         }
 
         private void QuitGame()
         {
+            SoundModule.Instance.PlayAudio(11);
             Application.Quit(1);
         }
     }

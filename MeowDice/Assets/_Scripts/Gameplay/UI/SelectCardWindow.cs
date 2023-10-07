@@ -83,6 +83,7 @@ namespace MeowDice.GamePlay.UI
 
         private void OnClickConfirm()
         {
+            SoundModule.Instance.PlayAudio(11);
             if (_selectCardId == -1)
             {
                 Debug.LogError("[Game][SelectCardWindow][OnClickConfirm] selectCardId is 0");
@@ -97,6 +98,7 @@ namespace MeowDice.GamePlay.UI
 
         private void OnClickSkip()
         {
+            SoundModule.Instance.PlayAudio(11);
             var window = UIModule.Instance.GetWindow<CurtainWindow>();
             window.OnEnterNextRound();
             SetVisible(false);

@@ -63,6 +63,7 @@ namespace MeowDice.GamePlay.UI
             _curtain.localPosition = targetPosition;
             UIModule.Instance.GetWindow<MeowDiceCardGameWindow>().SetVisible(false);
             UIModule.Instance.GetWindow<MeowDiceCatInfoWindow>().SetVisible(true);
+            SoundModule.Instance.PlayAudio(Random.Range(3, 6));
 
             // _curtainText.text = $"骰子点数{MeowDiceCardGame.Instance.CardManager.RandomSelectCardIndex}";
 

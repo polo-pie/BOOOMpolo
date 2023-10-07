@@ -120,6 +120,7 @@ namespace MeowDice.GamePlay.UI
 
         private void OnConfirmClick()
         {
+            SoundModule.Instance.PlayAudio(11);
             MeowDiceCardGame.Instance.EnterDiceStage();
         }
     }

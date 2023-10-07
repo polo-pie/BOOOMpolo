@@ -8,6 +8,7 @@ public class Main : MonoBehaviour
 {
     void Start()
     {
+        SoundModule.Instance.PlayBGM(2);
         UIModule.Instance.ShowUI<MainWindow>(new Dictionary<string, object>());
     }
 }
