@@ -42,6 +42,7 @@ namespace MeowDice.GamePlay
         /// </summary>
         internal void OnRoundStart()
         {
+            SoundModule.Instance.PlayAudio(15);
             // 卡牌数小于每回合发牌数
             if (cards.Count < SettingModule.Instance.GlobalConfig.DealCount)
             {

@@ -24,6 +24,7 @@ namespace MeowDice.GamePlay
         
         private void Awake()
         {
+            SoundModule.Instance.PlayBGM(1);
             MeowDiceCardGame.Instance.GameInit();
             _window = UIModule.Instance.ShowUI<MeowDiceCardGameWindow>(new Dictionary<string, object>());
 
