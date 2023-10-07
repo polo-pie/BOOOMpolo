@@ -22,6 +22,8 @@ namespace MeowDice.GamePlay.UI
         private CatStateButton _memoryStateBtn;
         private TextMeshProUGUI _stateText;
         private GameObject _description;
+        private GameObject _comfort;
+        private Text _comfortText;
 
         private Slider _sanSlider;
         private Slider _alterSlider;
@@ -40,6 +42,9 @@ namespace MeowDice.GamePlay.UI
             _stateText = Go.transform.Find("Des/Text").GetComponent<TextMeshProUGUI>();
             _description = Go.transform.Find("Des").gameObject;
 
+            _comfort = Go.transform.Find("Comfort").gameObject;
+            _comfortText = Go.transform.Find("Comfort/Text").GetComponent<Text>();
+
             _angryStateBtn.OnPointerEnterCallback = ShowAngryStateDetail;
             _angryStateBtn.OnPointerExitCallback = HideStateDetail;
             _memoryStateBtn.OnPointerEnterCallback = ShowMemoryStateDetail;
@@ -55,6 +60,8 @@ namespace MeowDice.GamePlay.UI
             _angryStateBtn.gameObject.SetActive(_cat.angryStateCount > 0);
             _memoryStateBtn.gameObject.SetActive(_cat.memoryStateCount > 0);
             _description.SetActive(false);
+            _comfort.SetActive(_cat.ComfortValue > 0);
+            _comfortText.text = _cat.ComfortValue.ToString();
         }
 
         protected override void OnRefresh()
@@ -65,19 +72,22 @@ namespace MeowDice.GamePlay.UI
             _alterText.text = $"{_cat.AlterValue}/{_cat.MaxAlterValue}";
             _angryStateBtn.gameObject.SetActive(_cat.angryStateCount > 0);
             _memoryStateBtn.gameObject.SetActive(_cat.memoryStateCount > 0);
+            _comfort.SetActive(_cat.ComfortValue > 0);
+            _comfortText.text = _cat.ComfortValue.ToString();
         }
 
         private void OnStartAct(uint cardId, int alterChange, int sanChange)
         {
-
             UIModule.Instance.StartCoroutine(DoScanAndAlterChange());
         }
 
         IEnumerator DoScanAndAlterChange()
         {
-            yield return new WaitForSeconds(1);
             var currentSanValue = _sanSlider.value;
             var currentAlterValue = _alterSlider.value;
+            
+            yield return new WaitForSeconds(1);
+            OnRefresh();
 
             var targetSanValue = (float)_cat.SanValue / _cat.MaxSanValue;
             var targetAlterValue = (float)_cat.AlterValue / _cat.MaxAlterValue;

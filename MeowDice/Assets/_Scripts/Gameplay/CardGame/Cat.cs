@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using Engine.UI;
 using MeowDice.GamePlay.Settings;
+using MeowDice.GamePlay.UI;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -28,7 +31,7 @@ namespace MeowDice.GamePlay
 
         private int _alterValue;
 
-        public int ComfortValue;
+        public int ComfortValue => _comfortValue;
         private int _comfortValue;
 
         public readonly int MaxSanValue;
@@ -61,18 +64,17 @@ namespace MeowDice.GamePlay
 
         public void AlterChange(int value)
         {
-            if (value < 0)
+            if (value > 0)
             {
-                var tmp = math.abs(value);
-                if (tmp > _comfortValue)
+                if (value > _comfortValue)
                 {
-                    value = value + _comfortValue;
+                    value = value - _comfortValue;
                     _comfortValue = 0;
                 }
                 else
                 {
+                    _comfortValue -= value;
                     value = 0;
-                    _comfortValue -= tmp;
                 }
             }
             
@@ -85,6 +87,7 @@ namespace MeowDice.GamePlay
         {
             _comfortValue += value;
             _comfortValue = math.max(0, _comfortValue);
+            UIModule.Instance.GetWindow<MeowDiceCatInfoWindow>().RefreshUIElement(new Dictionary<string, object>());
         }
 
         public void OnRoundEnd()
