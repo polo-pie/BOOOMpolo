@@ -92,9 +92,24 @@ namespace MeowDice.GamePlay
 
         public void OnRoundEnd()
         {
-            if(clearComfortInRoundEnd)
+            AlterChange(GetNextAlterChange());
+            if(clearComfortInRoundEnd && memoryStateCount == 0)
                 _comfortValue = 0;
             clearComfortInRoundEnd = true;
+            memoryStateCount = math.max(0, memoryStateCount - 1);
+        }
+
+        public int GetNextAlterChange()
+        {
+            if (_sanValue < 20)
+                return 60;
+            if (_sanValue < 40)
+                return 40;
+            if (_sanValue < 60)
+                return 20;
+            if (_sanValue < 80)
+                return 10;
+            return 5;
         }
     }
 }

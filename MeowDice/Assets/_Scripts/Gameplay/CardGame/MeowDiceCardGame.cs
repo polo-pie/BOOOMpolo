@@ -34,6 +34,7 @@ namespace MeowDice.GamePlay
         public void RoundEnd()
         {
             _player.OnRoundEnd();
+            _cat.OnRoundEnd();
 
             if (_cat.AlterValue >= SettingModule.Instance.GlobalConfig.AlterLimit.y)
             {

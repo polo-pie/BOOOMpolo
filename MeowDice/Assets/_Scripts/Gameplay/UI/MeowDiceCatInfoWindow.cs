@@ -25,6 +25,9 @@ namespace MeowDice.GamePlay.UI
         private GameObject _comfort;
         private Text _comfortText;
 
+        private GameObject _info;
+        private TextMeshProUGUI _infoText;
+
         private Slider _sanSlider;
         private Slider _alterSlider;
 
@@ -45,6 +48,9 @@ namespace MeowDice.GamePlay.UI
             _comfort = Go.transform.Find("Comfort").gameObject;
             _comfortText = Go.transform.Find("Comfort/Text").GetComponent<Text>();
 
+            _info = Go.transform.Find("Info").gameObject;
+            _infoText = Go.transform.Find("Info/Text").GetComponent<TextMeshProUGUI>();
+
             _angryStateBtn.OnPointerEnterCallback = ShowAngryStateDetail;
             _angryStateBtn.OnPointerExitCallback = HideStateDetail;
             _memoryStateBtn.OnPointerEnterCallback = ShowMemoryStateDetail;
@@ -62,6 +68,7 @@ namespace MeowDice.GamePlay.UI
             _description.SetActive(false);
             _comfort.SetActive(_cat.ComfortValue > 0);
             _comfortText.text = _cat.ComfortValue.ToString();
+            _info.SetActive(false);
         }
 
         protected override void OnRefresh()
@@ -74,10 +81,12 @@ namespace MeowDice.GamePlay.UI
             _memoryStateBtn.gameObject.SetActive(_cat.memoryStateCount > 0);
             _comfort.SetActive(_cat.ComfortValue > 0);
             _comfortText.text = _cat.ComfortValue.ToString();
+            _info.SetActive(false);
         }
 
         private void OnStartAct(uint cardId, int alterChange, int sanChange)
         {
+            
             UIModule.Instance.StartCoroutine(DoScanAndAlterChange());
         }
 
@@ -110,6 +119,9 @@ namespace MeowDice.GamePlay.UI
             _sanText.text = $"{_cat.SanValue}/{_cat.MaxSanValue}";
             _alterText.text = $"{_cat.AlterValue}/{_cat.MaxAlterValue}";
             OnRefresh();
+            
+            _info.SetActive(true);
+            _infoText.text = $"下回合警戒度变化{_cat.GetNextAlterChange()}";
             
             MeowDiceCardGame.Instance.RoundEnd();
         }
