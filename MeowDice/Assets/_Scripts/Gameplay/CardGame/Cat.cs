@@ -1,8 +1,17 @@
+using System;
 using MeowDice.GamePlay.Settings;
 using Unity.Mathematics;
+using UnityEngine;
 
 namespace MeowDice.GamePlay
 {
+    [Serializable]
+    public class CatPosition
+    {
+        public int index;
+        public Transform transform;
+    }
+    
     public class Cat
     {
         /// <summary>

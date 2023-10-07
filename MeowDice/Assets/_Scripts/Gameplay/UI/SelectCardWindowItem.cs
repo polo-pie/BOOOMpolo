@@ -67,6 +67,11 @@ namespace MeowDice.GamePlay.UI
             _cardImageData["path"] = table.GetData(CardId, "CardImage");
         }
 
+        public void UnSelect()
+        {
+            _selected = false;
+        }
+
         protected override void OnRefresh()
         {
             _cardNameText.RefreshUIElement(_cardNameTextData);
