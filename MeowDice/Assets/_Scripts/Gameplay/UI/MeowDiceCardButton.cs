@@ -25,6 +25,7 @@ namespace MeowDice.GamePlay.UI
             base.OnPointerExit(eventData);
             OnPointerExitCallback?.Invoke();
         }
+        
     }
 }
 
