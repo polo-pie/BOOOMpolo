@@ -82,13 +82,13 @@ public class CsvReader
             case "string":
                 return rawData;
             case "int":
-                if (int.TryParse(rawData, out int intValue))
-                    return intValue;
+                if (float.TryParse(rawData, out float intValue))
+                    return (int)intValue;
                 else
                     return 0;
             case "uint":
-                if (uint.TryParse(rawData, out uint uintValue))
-                    return uintValue;
+                if (float.TryParse(rawData, out float uintValue))
+                    return (uint)uintValue;
                 else
                     return 0u;
             case "float":
@@ -101,10 +101,10 @@ public class CsvReader
             case "stringlist":
                 return new List<string>(rawData.Split('|'));
             case "intlist":
-                var intList = rawData.Split('|').Select(str => int.TryParse(str, out int value) ? value : 0).ToList();
+                var intList = rawData.Split('|').Select(str => float.TryParse(str, out float value) ? (int)value : 0).ToList();
                 return intList;
             case "uintlist":
-                var uintList = rawData.Split('|').Select(str => uint.TryParse(str, out uint value) ? value : 0u).ToList();
+                var uintList = rawData.Split('|').Select(str => float.TryParse(str, out float value) ? (uint)value : 0u).ToList();
                 return uintList;
             case "floatlist":
                 var floatList = rawData.Split('|').Select(str => float.TryParse(str, out float value) ? value : 0f).ToList();
