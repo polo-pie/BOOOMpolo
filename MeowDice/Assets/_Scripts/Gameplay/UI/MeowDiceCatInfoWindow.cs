@@ -99,20 +99,21 @@ namespace MeowDice.GamePlay.UI
             _alterSlider.value = targetAlterValue;
             _sanText.text = $"{_cat.SanValue}/{_cat.MaxSanValue}";
             _alterText.text = $"{_cat.AlterValue}/{_cat.MaxAlterValue}";
-
+            OnRefresh();
+            
             MeowDiceCardGame.Instance.RoundEnd();
         }
 
         private void ShowAngryStateDetail()
         {
             _description.SetActive(true);
-            _stateText.text = $"愤怒/n持续{_cat.angryStateCount}回合";
+            _stateText.text = $"愤怒\n持续{_cat.angryStateCount}回合";
         }
 
         private void ShowMemoryStateDetail()
         {
             _description.SetActive(true);
-            _stateText.text = $"入梦/n持续{_cat.angryStateCount}回合";
+            _stateText.text = $"入梦\n持续{_cat.memoryStateCount}回合";
         }
 
         private void HideStateDetail()
