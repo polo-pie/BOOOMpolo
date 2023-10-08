@@ -37,7 +37,6 @@ namespace MeowDice.GamePlay.UI
             _alterSlider = Go.transform.Find("CatAlter").GetComponent<Slider>();
             _sanText = Go.transform.Find("CatSan/Text").GetComponent<Text>();
             _alterText = Go.transform.Find("CatAlter/Text").GetComponent<Text>();
-            GameEvent.AddEventListener<uint, int, int>(EventKey.OnStartAct, OnStartAct);
             _cat = MeowDiceCardGame.Instance.Cat;
 
             _angryStateBtn = Go.transform.Find("States/AngryState").GetComponent<CatStateButton>();
@@ -55,6 +54,13 @@ namespace MeowDice.GamePlay.UI
             _angryStateBtn.OnPointerExitCallback = HideStateDetail;
             _memoryStateBtn.OnPointerEnterCallback = ShowMemoryStateDetail;
             _memoryStateBtn.OnPointerExitCallback = HideStateDetail;
+            
+            GameEvent.AddEventListener<uint, int, int>(EventKey.OnStartAct, OnStartAct);
+        }
+
+        protected override void OnDestroy()
+        {
+            GameEvent.RemoveEventListener<uint, int, int>(EventKey.OnStartAct, OnStartAct);
         }
 
         protected override void BindProperty()
@@ -87,7 +93,6 @@ namespace MeowDice.GamePlay.UI
 
         private void OnStartAct(uint cardId, int alterChange, int sanChange)
         {
-            
             UIModule.Instance.StartCoroutine(DoScanAndAlterChange());
         }
 
@@ -121,7 +126,6 @@ namespace MeowDice.GamePlay.UI
             _alterText.text = $"{_cat.AlterValue}/{_cat.MaxAlterValue}";
             OnRefresh();
             
-            MeowDiceCardGame.Instance.RoundEnd();
         }
 
         private void ShowAngryStateDetail()
