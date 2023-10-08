@@ -13,13 +13,6 @@ namespace MeowDice.GamePlay
         public AudioSource meowSource;
         public AudioSource otherSource;
 
-        public override void Awake()
-        {
-            base.Awake();
-            StartCoroutine(PlayMeow());
-
-        }
-
         public void PlayBGM(int resourceId)
         {
             var table = TableModule.Get("SoundsResource");
@@ -30,9 +23,8 @@ namespace MeowDice.GamePlay
             bgmSource.Play();
         }
 
-        private IEnumerator PlayMeow()
+        public void PlayMeow()
         {
-            yield return new WaitForSeconds(5);
             var resourceId = Random.Range(6, 11);
             
             var table = TableModule.Get("SoundsResource");
@@ -41,8 +33,6 @@ namespace MeowDice.GamePlay
             var audio = Resources.Load<AudioClip>(path.ToString());
             meowSource.clip = audio;
             meowSource.Play();
-
-            StartCoroutine(PlayMeow());
         }
 
         public void PlayAudio(int resourceId)

@@ -72,6 +72,7 @@ namespace MeowDice.GamePlay
                     cats[act].SetActive(true);
                 }
             }
+            SoundModule.Instance.PlayMeow();
         }
 
         public void OnRoundEnd()
