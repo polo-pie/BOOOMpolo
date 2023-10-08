@@ -104,7 +104,9 @@ namespace MeowDice.GamePlay
             var card = _game.Player.selectedCards[RandomSelectCardIndex];
             if (card == null)
             {
-                GameEvent.Send(EventKey.OnStartAct, (uint)2,0, 0);
+                GameEvent.Send(EventKey.OnStartAct, (uint)0,0, 0);
+                GameEvent.Send(EventKey.OnStartDialogue, (uint)0);
+
             }
             else
             {
@@ -114,6 +116,8 @@ namespace MeowDice.GamePlay
                 _game.Cat.SanChange(sanChange);
                 GameEvent.Send(EventKey.OnStartAct, card.cardId, alterChange, sanChange);
                 GameEvent.Send(EventKey.DoCatAct, card.cardId);
+                GameEvent.Send(EventKey.OnStartDialogue, card.cardId);
+
             }
         }
 

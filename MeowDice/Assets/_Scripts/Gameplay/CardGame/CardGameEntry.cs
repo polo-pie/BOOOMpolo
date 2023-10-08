@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection.Emit;
+using _Scripts.Gameplay.UI;
 using Engine;
 using Engine.Runtime;
 using Engine.SettingModule;
@@ -21,12 +22,15 @@ namespace MeowDice.GamePlay
         private MeowDiceCatInfoWindow _catInfoWindow;
         private CurtainWindow _curtainWindow;
         private SelectCardWindow _selectCardWindow;
+        private ChatWindow _chatWindow;
         
         private void Awake()
         {
             SoundModule.Instance.PlayBGM(1);
             MeowDiceCardGame.Instance.GameInit();
             _window = UIModule.Instance.ShowUI<MeowDiceCardGameWindow>(new Dictionary<string, object>());
+            _chatWindow = UIModule.Instance.ShowUI<ChatWindow>(new Dictionary<string, object>());
+            _chatWindow.SetVisible(false);
 
             cats = new Dictionary<int, GameObject>();
             foreach (var catPosition in catPositions)
@@ -47,6 +51,7 @@ namespace MeowDice.GamePlay
             _catInfoWindow.Close();
             _curtainWindow.Close();
             _selectCardWindow.Close();
+            _chatWindow.Close();
         }
 
         private void Start()
