@@ -81,7 +81,8 @@ namespace MeowDice.GamePlay.UI
             _memoryStateBtn.gameObject.SetActive(_cat.memoryStateCount > 0);
             _comfort.SetActive(_cat.ComfortValue > 0);
             _comfortText.text = _cat.ComfortValue.ToString();
-            _info.SetActive(false);
+            _info.SetActive(true);
+            _infoText.text = $"下回合警戒度变化{_cat.CurrentRoundAlterChangeValue}";
         }
 
         private void OnStartAct(uint cardId, int alterChange, int sanChange)
@@ -119,9 +120,6 @@ namespace MeowDice.GamePlay.UI
             _sanText.text = $"{_cat.SanValue}/{_cat.MaxSanValue}";
             _alterText.text = $"{_cat.AlterValue}/{_cat.MaxAlterValue}";
             OnRefresh();
-            
-            _info.SetActive(true);
-            _infoText.text = $"下回合警戒度变化{_cat.GetNextAlterChange()}";
             
             MeowDiceCardGame.Instance.RoundEnd();
         }

@@ -64,6 +64,7 @@ namespace MeowDice.GamePlay
         public void EnterCardUseStage()
         {
             _roundStage = RoundStage.CardUse;
+            _cat.OnRoundStart();
             _cardManager.OnRoundStart();
             UIModule.Instance.GetWindow<MeowDiceCatInfoWindow>()?.RefreshUIElement(new Dictionary<string, object>());
         }

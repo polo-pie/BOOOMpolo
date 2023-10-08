@@ -34,6 +34,9 @@ namespace MeowDice.GamePlay
         public int ComfortValue => _comfortValue;
         private int _comfortValue;
 
+        public int CurrentRoundAlterChangeValue => _currentRoundAlterChangeValue;
+        private int _currentRoundAlterChangeValue;
+
         public readonly int MaxSanValue;
         public readonly int MaxAlterValue;
 
@@ -90,9 +93,14 @@ namespace MeowDice.GamePlay
             UIModule.Instance.GetWindow<MeowDiceCatInfoWindow>().RefreshUIElement(new Dictionary<string, object>());
         }
 
+        public void OnRoundStart()
+        {
+            _currentRoundAlterChangeValue = GetNextAlterChange();
+        }
+
         public void OnRoundEnd()
         {
-            AlterChange(GetNextAlterChange());
+            AlterChange(CurrentRoundAlterChangeValue);
             if(clearComfortInRoundEnd && memoryStateCount == 0)
                 _comfortValue = 0;
             clearComfortInRoundEnd = true;
