@@ -88,16 +88,9 @@ namespace MeowDice.GamePlay.UI
 
         private void OnDiceClick()
         {
-            var pos = 0;
-            foreach (var card in MeowDiceCardGame.Instance.Player.selectedCards)
+            if (MeowDiceCardGame.Instance.Player.selectedCards[_index] != null)
             {
-                if (pos == _index)
-                {
-                    MeowDiceCardGame.Instance.Player.UnSelectCard(card);
-                    break;
-                }
-
-                pos += card.cardData.DiceCost;
+                MeowDiceCardGame.Instance.Player.UnSelectCard(MeowDiceCardGame.Instance.Player.selectedCards[_index]);
             }
         }
 
