@@ -100,7 +100,6 @@ namespace MeowDice.GamePlay
 
         public void OnRoundEnd()
         {
-            AlterChange(CurrentRoundAlterChangeValue);
             if(clearComfortInRoundEnd && memoryStateCount == 0)
                 _comfortValue = 0;
             clearComfortInRoundEnd = true;

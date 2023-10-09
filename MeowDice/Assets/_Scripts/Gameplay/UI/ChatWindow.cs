@@ -47,7 +47,6 @@ namespace _Scripts.Gameplay.UI
 
         private IEnumerator CoShowDialogue(int index)
         {
-            float time = 0;
             if (index >= _dialogues.Count)
             {
                 SetVisible(false);
@@ -59,9 +58,8 @@ namespace _Scripts.Gameplay.UI
             var dialogue = table.GetData((uint)_dialogues[index], "Text");
             _text.text = dialogue.ToString();
 
-            while (time < 2 && !_jump)
+            while (!_jump)
             {
-                time += Time.deltaTime;
                 yield return null;
             }
 
