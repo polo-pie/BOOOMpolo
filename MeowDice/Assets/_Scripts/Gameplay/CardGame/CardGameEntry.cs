@@ -78,6 +78,16 @@ namespace MeowDice.GamePlay
                 }
             }
             SoundModule.Instance.PlayMeow();
+
+            StartCoroutine(CoDoAct(cardId));
+        }
+
+        IEnumerator CoDoAct(uint cardId)
+        {
+            yield return new WaitForSeconds(2);
+            
+            GameEvent.Send(EventKey.OnStartAct, cardId);
+            GameEvent.Send(EventKey.OnStartDialogue, cardId);
         }
 
         public void OnRoundEnd()

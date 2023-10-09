@@ -4,6 +4,7 @@ using Engine.UI;
 using MeowDice.GamePlay;
 using MeowDice.GamePlay.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace MeowDice.GamePlay.UI
@@ -18,6 +19,9 @@ namespace MeowDice.GamePlay.UI
         private Animation _diceAnimation;
         private Image _diceImage;
 
+        private Button _btnBack;
+        private Button _btnAgain;
+
         private Text _curtainText;
         private RectTransform _curtain;
         
@@ -30,6 +34,17 @@ namespace MeowDice.GamePlay.UI
             _diceAnimation = _dicePanel.transform.Find("DiceImage").GetComponent<Animation>();
             _diceImage = _dicePanel.transform.Find("ResultImage").GetComponent<Image>();
             GameEvent.AddEventListener<bool>(EventKey.OnGameEnd, OnGameEnd);
+
+            _btnAgain = Go.transform.Find("Curtain/BtnAgain").GetComponent<Button>();
+            _btnBack = Go.transform.Find("Curtain/BtnBack").GetComponent<Button>();
+            
+            _btnAgain.onClick.AddListener(OnBtnAgainClick);
+            _btnBack.onClick.AddListener(OnBtnBackClick);
+        }
+
+        protected override void OnDestroy()
+        {
+            GameEvent.RemoveEventListener<bool>(EventKey.OnGameEnd, OnGameEnd);
         }
 
         public void PlayDiceAnimation()
@@ -123,6 +138,19 @@ namespace MeowDice.GamePlay.UI
             SetVisible(true);
             _curtain.localPosition = Vector3.zero;
             _curtainText.text = isWin ? "胜利" : "失败";
+            
+            _btnAgain.gameObject.SetActive(true);
+            _btnBack.gameObject.SetActive(true);
+        }
+
+        private void OnBtnBackClick()
+        {
+            SceneManager.LoadScene(1);
+        }
+
+        private void OnBtnAgainClick()
+        {
+            SceneManager.LoadScene(2);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace MeowDice.GamePlay.UI
         protected override void OnDestroy()
         {
             GameEvent.RemoveEventListener<MeowDiceCard>(EventKey.SelectCard, OnSelectCard);
-            GameEvent.RemoveEventListener<MeowDiceCard>(EventKey.SelectCard, OnUnselectCard);
+            GameEvent.RemoveEventListener<MeowDiceCard>(EventKey.UnselectCard, OnUnselectCard);
         }
 
         protected override void BindProperty()

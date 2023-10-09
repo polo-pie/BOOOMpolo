@@ -55,12 +55,12 @@ namespace MeowDice.GamePlay.UI
             _memoryStateBtn.OnPointerEnterCallback = ShowMemoryStateDetail;
             _memoryStateBtn.OnPointerExitCallback = HideStateDetail;
             
-            GameEvent.AddEventListener<uint, int, int>(EventKey.OnStartAct, OnStartAct);
+            GameEvent.AddEventListener<uint>(EventKey.OnStartAct, OnStartAct);
         }
 
         protected override void OnDestroy()
         {
-            GameEvent.RemoveEventListener<uint, int, int>(EventKey.OnStartAct, OnStartAct);
+            GameEvent.RemoveEventListener<uint>(EventKey.OnStartAct, OnStartAct);
         }
 
         protected override void BindProperty()
@@ -91,7 +91,7 @@ namespace MeowDice.GamePlay.UI
             _infoText.text = $"下回合警戒度变化{_cat.CurrentRoundAlterChangeValue}";
         }
 
-        private void OnStartAct(uint cardId, int alterChange, int sanChange)
+        private void OnStartAct(uint cardId)
         {
             UIModule.Instance.StartCoroutine(DoScanAndAlterChange());
         }
@@ -125,7 +125,6 @@ namespace MeowDice.GamePlay.UI
             _sanText.text = $"{_cat.SanValue}/{_cat.MaxSanValue}";
             _alterText.text = $"{_cat.AlterValue}/{_cat.MaxAlterValue}";
             OnRefresh();
-            
         }
 
         private void ShowAngryStateDetail()
