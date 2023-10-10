@@ -62,6 +62,12 @@ namespace MeowDice.GamePlay
                 PlayerPrefs.SetInt("FirstOpen", 1);
                 PlayerPrefs.Save();
             }
+#if UNITY_EDITOR
+            else{
+                PlayerPrefs.SetInt("FirstOpen", 1);
+                PlayerPrefs.Save();
+            }
+#endif
             
             SoundModule.Instance.PlayBGM(2);
         }
